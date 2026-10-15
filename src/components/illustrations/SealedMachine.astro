@@ -1,0 +1,39 @@
+---
+interface Props { x: number; y: number; active?: boolean }
+const { x, y, active = false } = Astro.props;
+// Coordinates are measured from the enclosure's rear upper corner.
+// The central platform retains the same thickness as the four satellites.
+const w = active ? 125 : 94;
+const d = active ? 72 : 53.75;
+const h = active ? 146 : 109.25;
+const platformW = active ? 148 : 111.5;
+const platformD = active ? 84.5 : 64;
+const platformY = active ? 218.5 : 163.5;
+const thickness = active ? 28 : 27.5;
+const cubeW = active ? 60 : 44.5;
+const cubeD = active ? 34 : 25;
+const cubeY = active ? 149 : 112;
+const cubeH = active ? 70 : 52;
+---
+<g transform={`translate(${x} ${y})`} stroke="#99958f" stroke-width="2.15" stroke-linejoin="round">
+  <path d={`M${-platformW} ${platformY} 0 ${platformY+platformD}v${thickness}l${-platformW} ${-platformD}Z`} fill="#f4ece6" />
+  <path d={`M0 ${platformY+platformD}l${platformW} ${-platformD}v${thickness}L0 ${platformY+platformD+thickness}Z`} fill="#e8e1d9" />
+
+  <g stroke="none">
+    <path d={`M0 0 ${w} ${d} 0 ${2*d} ${-w} ${d}Z`} fill="#f6f2f0" />
+    <path d={`M${-w} ${d} 0 ${2*d}v${h}l${-w} ${-d}Z`} fill="#f8f4f2" fill-opacity=".78" />
+    <path d={`M0 ${2*d} ${w} ${d}v${h}L0 ${2*d+h}Z`} fill="#faf6f4" fill-opacity=".64" />
+  </g>
+  <path d={`M${-platformW} ${platformY} 0 ${platformY-platformD} ${platformW} ${platformY} 0 ${platformY+platformD}Z`} fill="#fffefd" />
+  <path d={`M0 10v${h-10}m-8 5 ${-w+8} ${d-5}m${w+8} ${-d+5} ${w-8} ${d-5}`} stroke="#b6b2ab" stroke-width="2.1" stroke-dasharray="5 8" fill="none" />
+
+  <g stroke={active ? '#c9531a' : '#a29a91'} stroke-width="2.3">
+    <path d={`M${-cubeW} ${cubeY} 0 ${cubeY+cubeD}v${cubeH}l${-cubeW} ${-cubeD}Z`} fill={active ? '#e7570c' : '#ebe5df'} />
+    <path d={`M0 ${cubeY+cubeD}l${cubeW} ${-cubeD}v${cubeH}L0 ${cubeY+cubeD+cubeH}Z`} fill={active ? '#c0410b' : '#e1d7cf'} />
+    <path d={`M${-cubeW} ${cubeY} 0 ${cubeY-cubeD} ${cubeW} ${cubeY} 0 ${cubeY+cubeD}Z`} fill={active ? '#ef7835' : '#faf6f3'} />
+  </g>
+
+  <!-- All front glass edges are in front of the inner cube, including its top. -->
+  <path d={`M${-w} ${d} 0 0 ${w} ${d} 0 ${2*d}Z M${-w} ${d}v${h}L0 ${2*d+h}l${w} ${-d}V${d} M0 ${2*d}v${h}`} fill="none" />
+  <circle cx={active ? 36 : 27} cy={active ? 298 : 228} r={active ? 6 : 4.6} fill={active ? '#e96528' : '#c8c0b7'} stroke="none" />
+</g>

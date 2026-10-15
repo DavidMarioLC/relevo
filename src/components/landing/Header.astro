@@ -1,0 +1,73 @@
+---
+import Brand from './Brand.astro';
+import { navigation, launchUrl } from '../../data/landing';
+---
+<header id="home" class="header">
+  <a class="home-link" href="#home" aria-label="Jurniti home"><Brand /></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+    <span data-menu-label>Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+  </button>
+  <nav id="site-nav" aria-label="Main navigation">
+    {navigation.map(item => item.href ? <a href={item.href}>{item.label}</a> : <span aria-disabled="true" title={`${item.label} — coming soon`}>{item.label}<span class="sr-only"> — coming soon</span></span>)}
+    <a class="mobile-feature-link" href="#features">Features</a>
+  </nav>
+  <div class="account">
+    <span class="login" aria-disabled="true" title="Log in — coming soon">Log in<span class="sr-only"> — coming soon</span></span>
+    <a class="button header-cta" href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a>
+  </div>
+</header>
+<script>
+  const header = document.querySelector<HTMLElement>('.header');
+  const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('#site-nav');
+  if (header && menu && nav) {
+    header.dataset.enhanced = 'true';
+    menu.hidden = false;
+    const setOpen = (open: boolean, restoreFocus = false) => {
+      menu.setAttribute('aria-expanded', String(open));
+      header.dataset.open = String(open);
+      const label = menu.querySelector('[data-menu-label]');
+      if (label) label.textContent = open ? 'Close' : 'Menu';
+      if (restoreFocus) menu.focus();
+    };
+    menu.addEventListener('click', () => setOpen(menu.getAttribute('aria-expanded') !== 'true'));
+    header.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') setOpen(false, true);
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
+    matchMedia('(min-width: 1024px)').addEventListener('change', () => setOpen(false));
+  }
+</script>
+<style>
+  .header { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 52px; position: relative; z-index: 2; }
+  .home-link { display: flex; align-items: center; padding: 0 20px; border-right: 1px solid var(--line); }
+  nav { display: flex; align-items: stretch; }
+  nav > a, nav > span, .login { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 18px; border-right: 1px solid var(--line); font: 10px var(--mono); text-transform: uppercase; }
+  nav > span, .login { cursor: default; }
+  .account { display: flex; margin-left: auto; }
+  .login { border-left: 1px solid var(--line); }
+  .header-cta { border: 0; }
+  .menu-toggle { display: none; }
+  nav .mobile-feature-link { display: none; }
+  @media (hover: hover) and (pointer: fine) { nav a:hover { background: #f0ece5; } }
+  @media (max-width: 1023px) {
+    .header { flex-wrap: wrap; }
+    .home-link { padding: 0 16px; min-height: 58px; border: 0; }
+    .account { margin-left: auto; }
+    .login { display: none; }
+    .header-cta { padding-inline: 15px; font-size: 10px; }
+    .header[data-enhanced] .menu-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; order: 3; border: 0; border-left: 1px solid var(--line); background: transparent; min-width: 82px; min-height: 58px; font: 10px var(--mono); text-transform: uppercase; }
+    .menu-icon { display: grid; gap: 4px; }
+    .menu-icon i { width: 13px; height: 1px; background: currentColor; }
+    nav { order: 4; width: 100%; flex-wrap: wrap; border-top: 1px solid var(--line); }
+    nav > a, nav > span { flex: 1; min-height: 48px; padding: 12px; }
+    nav .mobile-feature-link { display: flex; }
+    .header[data-enhanced]:not([data-open="true"]) nav { display: none; }
+  }
+  @media (max-width: 480px) {
+    .header-cta { display: none; }
+    .header[data-enhanced] .menu-toggle { margin-left: auto; padding: 0 20px; }
+    nav { display: grid; grid-template-columns: 1fr 1fr; }
+    nav > a, nav > span { justify-content: flex-start; padding-left: 20px; border-bottom: 1px solid var(--line); }
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+import { plans, resourceLabels, launchUrl } from '../../data/landing';
+---
+<section id="pricing" class="pricing section-pad" aria-labelledby="pricing-title">
+  <div class="pricing-heading">
+    <div><span class="eyebrow">Pricing</span><h2 id="pricing-title" class="section-title">A real machine for<br /><span class="soft">every agent.</span></h2></div>
+    <p>Every agent gets its own sealed machine at one flat monthly price. No usage billed on top, no markup on your model tokens.</p>
+  </div>
+  <div class="billing-wrapper">
+    <div class="billing" role="group" aria-label="Billing period" hidden>
+      <button type="button" data-period="monthly" aria-pressed="true">Bill monthly</button>
+      <button type="button" data-period="yearly" aria-pressed="false">Bill yearly <span>2 months free</span></button>
+    </div>
+  </div>
+  <div class="plan-grid">
+    {plans.map(plan => <article class:list={['plan', { recommended: plan.recommended }]} data-monthly={plan.monthly}>
+      <div class="plan-heading"><h3>{plan.name}</h3>{plan.recommended && <span class="recommended-label">Recommended</span>}</div>
+      <p class="plan-description">{plan.description}</p>
+      <div class="price"><span data-price>${plan.monthly}</span><span class="period">/ month</span></div>
+      <p class="annual-total" data-annual hidden></p>
+      {plan.waitlist ? <button class="button outline plan-cta" disabled title="Waitlist — coming soon">Join the waitlist<span class="sr-only"> — coming soon</span></button> : <a class:list={['button', 'plan-cta', plan.recommended ? 'light' : 'outline']} href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a>}
+      <dl>{resourceLabels.map((label, i) => <div class="resource"><dt>{label}</dt><dd>{plan.resources[i]}</dd></div>)}</dl>
+    </article>)}
+  </div>
+  <p class="hourly">Running agents part time? <span>Pay by the hour from $0.05<span class="sr-only"> — coming soon</span></span></p>
+  <p class="sr-only" role="status" aria-live="polite" data-billing-status></p>
+</section>
+<script>
+  const billing = document.querySelector<HTMLElement>('.billing');
+  if (billing) {
+    billing.hidden = false;
+    const buttons = billing.querySelectorAll<HTMLButtonElement>('button');
+    buttons.forEach(button => button.addEventListener('click', () => {
+      const yearly = button.dataset.period === 'yearly';
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      document.querySelectorAll<HTMLElement>('[data-monthly]').forEach(plan => {
+        const monthly = Number(plan.dataset.monthly);
+        const price = plan.querySelector('[data-price]');
+        const annual = plan.querySelector<HTMLElement>('[data-annual]');
+        if (price) price.textContent = `$${yearly ? (monthly * 10 / 12).toFixed(2) : monthly}`;
+        if (annual) { annual.hidden = !yearly; annual.textContent = `$${monthly * 10} billed yearly · monthly equivalent`; }
+      });
+      const status = document.querySelector('[data-billing-status]');
+      if (status) status.textContent = yearly ? 'Yearly billing selected. Two months free. Starter: 250 dollars per year. Pro: 490 dollars per year. Max: 990 dollars per year.' : 'Monthly billing selected. Starter: 25 dollars. Pro: 49 dollars. Max: 99 dollars per month.';
+    }));
+  }
+</script>
+<style>
+  .pricing { border-top: 1px solid var(--line); }
+  .pricing-heading { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; }
+  .pricing-heading > p { max-width: 440px; justify-self: end; font-size: 16px; color: var(--muted); }
+  .billing-wrapper { min-height: 105px; display: flex; justify-content: center; align-items: center; padding: 28px 0; }
+  .billing { display: flex; border: 1px solid var(--line); padding: 4px; }
+  .billing button { min-height: 44px; border: 0; background: transparent; padding: 10px 14px; font: 10px var(--mono); text-transform: uppercase; }
+  .billing button[aria-pressed="true"] { background: var(--black); color: var(--paper); }
+  .billing button > span { display: inline-block; font-size: 8px; color: var(--orange-text); background: #faeee5; border: 1px solid #eeded1; padding: 4px 5px; margin-left: 6px; }
+  .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
+  .plan { padding: 28px 24px 0; min-width: 0; position: relative; }
+  .plan + .plan { border-left: 1px solid var(--line); }
+  .recommended { background: var(--black); color: var(--paper); }
+  .recommended::before { content: ''; position: absolute; top: 0; inset-inline: -1px; height: 7px; background: var(--orange); }
+  .plan-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  h3 { font-size: 20px; letter-spacing: -.05em; }
+  .recommended-label { padding: 6px 7px; color: #c7c3bc; background: #252420; font: 8px var(--mono); text-transform: uppercase; }
+  .plan-description { margin-top: 10px; font-size: 12px; color: var(--muted); }
+  .recommended .plan-description { color: #a7a69e; }
+  .price { display: flex; align-items: baseline; gap: 7px; margin: 14px 0 26px; }
+  [data-price] { font-size: 44px; font-weight: 500; letter-spacing: -.07em; line-height: 1; }
+  .period { font-size: 12px; color: var(--muted); }
+  .recommended .period { color: #b7b4ac; }
+  .annual-total { font-size: 10px; line-height: 1.4; margin: -16px 0 16px; color: var(--muted); }
+  .recommended .annual-total { color: #b7b4ac; }
+  .plan-cta { width: 100%; padding-inline: 8px; margin-bottom: 30px; font-size: 10px; }
+  .resource { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); font-size: 11px; line-height: 1.3; }
+  .resource dd { color: var(--muted); text-align: right; }
+  .recommended .resource { border-color: #2b2c26; }
+  .recommended .resource dd { color: #a7a69e; }
+  .hourly { text-align: center; margin-top: 26px; font-size: 12px; color: var(--muted); }
+  .hourly > span { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 1023px) { .pricing-heading { gap: 36px; } .pricing-heading > p { font-size: 14px; } .plan { padding-inline: 16px; } .recommended-label { font-size: 7px; padding-inline: 4px; } }
+  @media (max-width: 767px) {
+    .pricing-heading { grid-template-columns: 1fr; gap: 22px; }
+    .pricing-heading > p { justify-self: start; max-width: 400px; }
+    .billing-wrapper { min-height: 100px; }
+    .billing button { padding: 8px 10px; font-size: 9px; }
+    .billing button > span { font-size: 7px; margin-left: 3px; padding: 4px; }
+    .plan-grid { grid-template-columns: 1fr; }
+    .plan { padding: 27px 22px 6px; }
+    .plan + .plan { border-left: 0; border-top: 1px solid var(--line); }
+    h3 { font-size: 22px; }
+    .recommended-label { font-size: 9px; padding: 6px 7px; }
+    .resource { padding-block: 13px; font-size: 12px; }
+    .plan-cta { margin-bottom: 25px; }
+    .hourly { max-width: 240px; margin-inline: auto; line-height: 1.7; }
+  }
+</style>

@@ -1,0 +1,25 @@
+<!-- Preserve the approved source, including its color profile and lettering. -->
+<image href="/images/hero-reference.png" width="1732" height="728" />
+<g class="hero-activity">
+  <g fill="#f25d16" class="hero-lights">
+    <circle cx="825" cy="544" r="4" /><circle cx="624" cy="451" r="3.6" />
+    <circle cx="49" cy="382" r="1.8" /><circle cx="132" cy="430" r="1.8" /><circle cx="298" cy="430" r="1.8" />
+    <circle cx="1416" cy="526" r="1.8" /><circle cx="1499" cy="478" r="1.8" /><circle cx="1664" cy="382" r="1.8" />
+  </g>
+  <circle class="hero-signal-left" cx="475" cy="463" r="1.8" fill="#f25d16" />
+  <circle class="hero-signal-right" cx="1239" cy="463" r="1.8" fill="#f25d16" />
+  <path class="hero-trace" d="M1082 548 1094 531 1104 541 1113 527 1121 545 1129 532 1137 537" fill="none" stroke="#f47a24" stroke-width="1.2" stroke-dasharray="8 100" />
+</g>
+<style>
+  .hero-lights, .hero-signal-left, .hero-signal-right, .hero-trace { opacity: 0; }
+  .hero-lights { animation: hero-light 4.5s ease-in-out infinite; }
+  .hero-signal-left { animation: hero-left 4s linear infinite; }
+  .hero-signal-right { animation: hero-right 4s linear -2s infinite; }
+  .hero-trace { animation: hero-trace 4s linear infinite; }
+  /* Pausing reveals only the reference, regardless of cycle phase. */
+  :global(.scene-hero:not([data-running="true"])) .hero-activity { visibility: hidden; }
+  @keyframes hero-light { 0%, 100% { opacity: 0; } 50% { opacity: .45; } }
+  @keyframes hero-left { 0% { transform: translate(0, 0); opacity: 0; } 15%, 85% { opacity: .8; } 100% { transform: translate(138px, 80px); opacity: 0; } }
+  @keyframes hero-right { 0% { transform: translate(0, 0); opacity: 0; } 15%, 85% { opacity: .8; } 100% { transform: translate(-89px, 51px); opacity: 0; } }
+  @keyframes hero-trace { 0%, 100% { opacity: 0; stroke-dashoffset: 0; } 30%, 70% { opacity: .6; } 90% { stroke-dashoffset: -100; } }
+</style>

@@ -1,0 +1,27 @@
+---
+import SealedMachine from './SealedMachine.astro';
+import labels from '../../data/sealed-labels.json';
+---
+<g stroke-linecap="round" stroke-linejoin="round">
+  <g fill="#f3efed">
+    <path d="m172 314 55 23 111-64-55-23Zm743 0 55 23 111-64-55-23ZM172 744.5l55 23 111-64-55-23Zm743 0 55 23 111-64-55-23ZM543.5 550l73 31 148-84-73-31Z" />
+  </g>
+  <g stroke="#a9a49c" stroke-width="2.4" stroke-dasharray="6 14">
+    <path d="M238 289 438 404M650 405 857 286M251 635 447 522M641 522 833 633" />
+  </g>
+  <g stroke="#ee6c28" stroke-width="2.4">
+    <path d="m306 342 24-14m17 37 24-14m346 0 24 14m17-37 24 14M306 589l24 14m17-38 24 14m346 0 24-14m17 38 24-14" />
+  </g>
+  <path d="m348 465 195-113 197 113-197 114Z" stroke="#e9aa88" stroke-width="2" stroke-dasharray="5 12" fill="none" />
+  <g fill="#d5c0b1">
+    <circle cx="447" cy="522" r="5" /><circle cx="641" cy="522" r="5" />
+  </g>
+  <SealedMachine x={172} y={59} />
+  <SealedMachine x={915} y={59} />
+  <SealedMachine x={172} y={489.5} />
+  <SealedMachine x={915} y={489.5} />
+  <SealedMachine x={543.5} y={219} active />
+  {labels.map(label => <g data-label={label.name} fill={label.fill} fill-rule="evenodd">
+    {label.layers.map(layer => <path d={layer.d} opacity={layer.opacity} />)}
+  </g>)}
+</g>

@@ -1,0 +1,54 @@
+---
+// Geometry follows the supplied 1120 × 756 reference.
+const machines = [
+  { x: 337, y: 224, w: 56, d: 32.5, h: 83, baseW: 66, baseD: 38, baseY: 97, thickness: 18, cubeW: 26, cubeD: 15, cubeY: 65, cubeH: 30, orange: true, indicator: 17, radius: 3 },
+  { x: 596, y: 113, w: 119, d: 70, h: 137, baseW: 140, baseD: 80, baseY: 207, thickness: 24, cubeW: 56, cubeD: 32, cubeY: 141, cubeH: 65, orange: true, indicator: 35, radius: 6 },
+  { x: 855, y: 224, w: 56, d: 32.5, h: 83, baseW: 66, baseD: 38, baseY: 97, thickness: 18, cubeW: 26, cubeD: 15, cubeY: 65, cubeH: 30, orange: false, indicator: 17, radius: 3 },
+  { x: 596, y: 385, w: 56, d: 32.5, h: 83, baseW: 66, baseD: 38, baseY: 98, thickness: 18, cubeW: 26, cubeD: 15, cubeY: 66, cubeH: 30, orange: false, indicator: 17, radius: 3 },
+];
+---
+<g stroke-linecap="round" stroke-linejoin="round">
+  <!-- Fine construction lines continue beyond the shared platform. -->
+  <g stroke="#dfdcd8" stroke-width="2.5">
+    <path d="M483 65 1120 433M710 65 47 449M47 316 710 699M483 699 1120 331" />
+  </g>
+
+  <g stroke="#a5a19a" stroke-width="2.6">
+    <path d="m231 340 365 210v20L231 360Z" fill="#f2eee8" />
+    <path d="m596 550 366-210v20L596 570Z" fill="#e9e4dd" />
+    <path d="m231 340 365-212 366 212-366 210Z" fill="#fcfaf7" />
+  </g>
+
+  <g fill="#eeebe8" opacity=".3">
+    <path d="m337 377 36 13 66-38-36-13Z" />
+    <path d="m596 424 70 27 141-81-70-26Z" />
+    <path d="m855 377 35 13 67-38-36-13Z" />
+    <path d="m596 539 35 12 67-38-36-13Z" />
+  </g>
+  <path d="m414 341 182-105 183 105-183 105Z" stroke="#cda991" stroke-width="2.5" stroke-dasharray="4 8" />
+
+  {machines.map(({ x, y, w, d, h, baseW, baseD, baseY, thickness, cubeW, cubeD, cubeY, cubeH, orange, indicator, radius }) => (
+    <g transform={`translate(${x} ${y})`} stroke="#a19d96" stroke-width="2.5">
+      <!-- The lightly tinted glass sits behind the platform and the inner cube. -->
+      <g stroke="none">
+        <path d={`M0 0 ${w} ${d} 0 ${2*d} ${-w} ${d}Z`} fill="#f0edeb" fill-opacity=".7" />
+        <path d={`M${-w} ${d} 0 ${2*d}v${h}l${-w} ${-d}Z`} fill="#f4f1ee" fill-opacity=".6" />
+        <path d={`M0 ${2*d} ${w} ${d}v${h}L0 ${2*d+h}Z`} fill="#f5f2ef" fill-opacity=".5" />
+      </g>
+      <path d={`M${-baseW} ${baseY} 0 ${baseY+baseD}v${thickness}l${-baseW} ${-baseD}Z`} fill="#f2eee8" />
+      <path d={`M0 ${baseY+baseD}l${baseW} ${-baseD}v${thickness}L0 ${baseY+baseD+thickness}Z`} fill="#e8e2db" />
+      <path d={`M${-baseW} ${baseY} 0 ${baseY-baseD} ${baseW} ${baseY} 0 ${baseY+baseD}Z`} fill="#fffefd" />
+      <path d={`M0 6v${h-6}m-6 4 ${-w+6} ${d-4}m${w+6} ${-d+4} ${w-6} ${d-4}`} fill="none" stroke="#b4afa7" stroke-width="2.3" stroke-dasharray="2 6" />
+
+      <g stroke={orange ? '#ce601d' : '#a49d94'} stroke-width="2.3">
+        <path d={`M${-cubeW} ${cubeY} 0 ${cubeY+cubeD}v${cubeH}l${-cubeW} ${-cubeD}Z`} fill={orange ? '#eb6007' : '#eae4de'} />
+        <path d={`M0 ${cubeY+cubeD}l${cubeW} ${-cubeD}v${cubeH}L0 ${cubeY+cubeD+cubeH}Z`} fill={orange ? '#c44905' : '#ddd6ce'} />
+        <path d={`M${-cubeW} ${cubeY} 0 ${cubeY-cubeD} ${cubeW} ${cubeY} 0 ${cubeY+cubeD}Z`} fill={orange ? '#f3823e' : '#faf7f3'} />
+      </g>
+
+      <!-- Front glass edges remain visible across the solid cube. -->
+      <path d={`M${-w} ${d} 0 0 ${w} ${d} 0 ${2*d}Z M${-w} ${d}v${h}L0 ${2*d+h}l${w} ${-d}V${d} M0 ${2*d}v${h}`} fill="none" />
+      <circle cx={indicator} cy={baseY+baseD+thickness/2-indicator*baseD/baseW} r={radius} fill={orange ? '#e97630' : '#c7c0b7'} stroke="none" />
+    </g>
+  ))}
+</g>

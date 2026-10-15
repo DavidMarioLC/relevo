@@ -1,0 +1,15 @@
+---
+import Cube from './Cube.astro';
+interface Props { x?: number; y?: number; scale?: number; active?: boolean; delay?: number; cage?: boolean }
+const { x = 0, y = 0, scale = 1, active = false, delay = 0, cage = true } = Astro.props;
+---
+<g transform={`translate(${x} ${y}) scale(${scale})`}>
+  <polygon points="-33,27 9,50 48,28 8,6" fill="#ded9d0" opacity=".3" />
+  <Cube y={18} size={32} height={6} />
+  <Cube y={12} size={27} height={5} />
+  <g class={active ? 'node-pulse' : ''} style={`animation-delay:${delay}s`}>
+    <Cube y={-3} size={12} height={18} orange={active} />
+  </g>
+  {cage && <Cube y={-18} size={24} height={33} wire />}
+  <circle cx="0" cy="39" r="1.6" fill={active ? '#f45b16' : '#aaa69f'} />
+</g>

@@ -1,0 +1,15 @@
+---
+import Scene from '../illustrations/Scene.astro';
+import { launchUrl } from '../../data/landing';
+---
+<section id="get-started" class="get-started" aria-labelledby="get-started-title">
+  <div class="cta-copy"><span class="eyebrow">Get started</span><h2 id="get-started-title">Your first agent is three minutes away.</h2><a class="button" href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a></div>
+  <div class="cta-art"><Scene kind="deploy" /></div>
+</section>
+<style>
+  .get-started { display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 50px 36px 38px; border-top: 1px solid var(--line); gap: 40px; }
+  h2 { font-size: clamp(38px, 4vw, 56px); max-width: 520px; margin-bottom: 34px; }
+  .cta-art { max-width: 550px; width: 100%; justify-self: end; }
+  @media (max-width: 1023px) { .get-started { padding-inline: 28px; gap: 20px; } }
+  @media (max-width: 767px) { .get-started { grid-template-columns: 1fr; padding: 64px 20px 20px; gap: 20px; } h2 { font-size: 40px; margin-bottom: 26px; } .cta-art { max-width: 430px; justify-self: center; } }
+</style>

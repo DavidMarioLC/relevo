@@ -1,0 +1,14 @@
+---
+interface Props { x?: number; y?: number; size?: number; height?: number; orange?: boolean; wire?: boolean; class?: string }
+const { x = 0, y = 0, size: s = 24, height: h = 30, orange = false, wire = false, class: className } = Astro.props;
+const a = s * .55;
+const top = `${x},${y-a} ${x+s},${y} ${x},${y+a} ${x-s},${y}`;
+const left = `${x-s},${y} ${x},${y+a} ${x},${y+a+h} ${x-s},${y+h}`;
+const right = `${x},${y+a} ${x+s},${y} ${x+s},${y+h} ${x},${y+a+h}`;
+---
+<g class={className} stroke={orange ? '#dc5315' : '#a9a59e'} stroke-width={wire ? .85 : .8} stroke-linejoin="round">
+  <polygon points={left} fill={wire ? '#fcfaf7' : orange ? '#ee5b13' : '#f1ede6'} fill-opacity={wire ? .2 : 1} />
+  <polygon points={right} fill={wire ? '#fcfaf7' : orange ? '#d94308' : '#e9e5de'} fill-opacity={wire ? .12 : 1} />
+  <polygon points={top} fill={wire ? '#fcfaf7' : orange ? '#ff7938' : '#fffdf9'} fill-opacity={wire ? .3 : 1} />
+  {wire && <path d={`M${x} ${y-a}v${h}m${-s} ${-h+a} ${s} ${a} ${s} ${-a}`} fill="none" stroke-dasharray="2 3" opacity=".6" />}
+</g>

@@ -1,0 +1,10 @@
+---
+import labels from '../../data/hero-labels.json';
+interface Props { label: keyof typeof labels; light?: boolean }
+const { label, light = false } = Astro.props;
+---
+<!-- Local glyph outlines preserve the reference's projected lettering across platforms. -->
+<g class="hero-label" data-label={label} fill={light ? '#ffd0ad' : '#514b44'} stroke="none">
+  <text display="none">{label}</text>
+  {labels[label].map(({ d, opacity }) => <path d={d} opacity={opacity} fill-rule="evenodd" />)}
+</g>

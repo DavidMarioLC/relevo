@@ -1,0 +1,83 @@
+<!-- Coordinates follow the 1090 × 756 reference, including its generous margins. -->
+<g stroke-linejoin="round" stroke-linecap="round">
+  <g fill="#efedeb" opacity=".7">
+    <path d="m152 589 48 20 104-61-52-18Z" />
+    <path d="m453 416 50 19 101-59-51-18Z" />
+    <path d="m754 242 51 20 99-58-50-20Z" />
+    <path d="m769 645 91 35 184-106-96-36Z" />
+  </g>
+
+  <!-- Time advances along the diagonal; every session shares the same store. -->
+  <g fill="none" stroke="#aaa6a0" stroke-width="2.5" stroke-dasharray="6 13">
+    <path d="M235 484 399 389M537 310 700 216M197 564 650 479" />
+    <path d="m505 390 145 62" stroke-dasharray="2 10" />
+  </g>
+  <path d="m731 371 77-157" stroke="#e8925d" stroke-width="2.8" stroke-dasharray="6 13" />
+  <g fill="#aaa6a0">
+    <circle cx="399" cy="389" r="4.5" /><circle cx="505" cy="390" r="4" /><circle cx="700" cy="216" r="4.5" />
+  </g>
+  <circle cx="808" cy="214" r="5" fill="#e77939" />
+  <g stroke="#9b9790" stroke-width="2.5" fill="none">
+    <path d="m296 442 13-2-1 11M597 269l14-2-1 11" />
+  </g>
+
+  <!-- Day one: a single slab and a solid cube. -->
+  <g stroke="#96928b" stroke-width="2.5">
+    <path d="m52 511 100 57v22L52 532Z" fill="#f3eee8" />
+    <path d="m152 568 100-57v22l-100 57Z" fill="#e8e2db" />
+    <path d="m52 511 100-58 100 58-100 57Z" fill="#fffefd" />
+    <path d="m110 461 42 24v49l-42-25Z" fill="#eee8e1" />
+    <path d="m152 485 43-24v48l-43 25Z" fill="#ddd5cd" />
+    <path d="m110 461 42-24 43 24-43 24Z" fill="#fbf9f6" />
+  </g>
+
+  <!-- The middle session disappears, but its stored state remains. -->
+  <g stroke="#96928b" stroke-width="2.5">
+    <path d="m353 335 100 58v23l-100-58Z" fill="#f3eee8" />
+    <path d="m453 393 100-58v23l-100 58Z" fill="#e8e2db" />
+    <path d="m353 335 100-57 100 57-100 58Z" fill="#fffefd" />
+  </g>
+  <g stroke="#b5b0a8" stroke-width="2.5" stroke-dasharray="2 9" fill="none">
+    <path d="m411 287 42-24 42 24-42 25Zm0 0v48l42 25 42-25v-48m-42 25v48" />
+  </g>
+  <path d="M432 245c-2-10 9-17 22-17 11 0 20 5 20 12 0 7-10 13-21 13m-27-15 6 8 11-7" stroke="#ed8543" stroke-width="2.8" fill="none" />
+
+  <!-- Day two reuses the same persistent data. -->
+  <g stroke="#96928b" stroke-width="2.5">
+    <path d="m655 162 99 57v23l-99-57Z" fill="#f3eee8" />
+    <path d="m754 219 100-57v23l-100 57Z" fill="#e8e2db" />
+    <path d="m655 162 99-58 100 58-100 57Z" fill="#fffefd" />
+    <path d="m713 113 41 24v49l-41-24Z" fill="#eee8e1" />
+    <path d="m754 137 42-24v49l-42 24Z" fill="#ddd5cd" />
+    <path d="m713 113 41-24 42 24-42 24Z" fill="#fbf9f6" />
+  </g>
+
+  <!-- One wide plinth supports the three orange storage layers. -->
+  <g stroke="#96928b" stroke-width="2.5">
+    <path d="m589 518 180 104v23L589 541Z" fill="#f3eee8" />
+    <path d="m769 622 179-104v23L769 645Z" fill="#e8e2db" />
+    <path d="m589 518 180-104 179 104-179 104Z" fill="#fffefd" />
+  </g>
+  {[72, 36, 0].map(offset => (
+    <g transform={`translate(0 ${offset})`} stroke="#d44b08" stroke-width="2.8">
+      <path d="m650 418 118 68v28l-118-68Z" fill="#f1640c" />
+      <path d="m768 486 120-68v28l-120 68Z" fill="#d94b05" />
+      <path d="m650 418 118-68 120 68-120 68Z" fill="#f47735" />
+      <path d="m784 491 21-12" stroke="#ffe3bd" stroke-width="3.5" />
+    </g>
+  ))}
+
+  <g stroke="#b8b1a8" stroke-width="2" stroke-dasharray="1 6">
+    <path d="M897 431h43M897 467h43M897 503h43" />
+  </g>
+  <g font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace" font-size="20" fill="#99948e">
+    <text x="950" y="437">memory</text>
+    <text x="950" y="473">skills</text>
+    <text x="950" y="509">files</text>
+  </g>
+  <g font-family="'SFMono-Regular', Consolas, 'Liberation Mono', monospace" font-size="20" fill="#625e58">
+    <text transform="translate(64 566) rotate(30)">day 1</text>
+    <text transform="translate(801 100) rotate(30)">day 2</text>
+    <text transform="translate(600 583) rotate(30)" font-size="23">/persist</text>
+  </g>
+</g>

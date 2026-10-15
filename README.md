@@ -1,46 +1,58 @@
-# Astro Starter Kit: Basics
+# Jurniti
+
+Landing pública de Jurniti construida con Astro. Incluye navegación adaptable, funcionalidades, comparación mensual/anual de planes y controles accesibles de movimiento.
+
+## Desarrollo
+
+Requiere Node.js >=22.12.0. Instala las dependencias con `pnpm install`.
+
+Inicia el servidor en segundo plano:
 
 ```sh
-pnpm create astro@latest -- --template basics
+pnpm exec astro dev --background
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+La vista local está disponible normalmente en `http://localhost:4321/`. Gestiona el servidor con:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+pnpm exec astro dev status
+pnpm exec astro dev logs
+pnpm exec astro dev stop
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Compila y revisa la versión de producción con:
 
-## 🧞 Commands
+```sh
+pnpm build
+pnpm preview
+```
 
-All commands are run from the root of the project, from a terminal:
+## Estructura
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+- `src/pages/index.astro`: composición de la landing.
+- `src/components/landing/`: navegación, hero, funcionalidades, precios, CTA y footer.
+- `src/components/illustrations/`: escenas isométricas y actividad visual.
+- `src/data/landing.ts`: contenido, recursos, precios y destinos de enlaces.
+- `src/scripts/motion.ts`: pausa, visibilidad y preferencia de movimiento reducido.
+- `src/styles/global.css`: estilos y tokens compartidos.
+- `public/images/hero-reference.png`: imagen original del hero; debe conservarse.
+- `openspec/specs/`: contratos vigentes del comportamiento implementado.
+- `openspec/changes/archive/`: historial de los cambios completados.
 
-## 👀 Want to learn more?
+## Estado actual
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+La etapa visual de la landing está completada. El hero usa la imagen original de 1732 × 728 con actividad SVG en luces, conexiones y monitor; el cubo permanece fijo. Las cuatro escenas restantes son vectoriales. Pausa, movimiento reducido y ausencia de JavaScript conservan una presentación estática útil.
+
+Los CTA de lanzamiento llevan a precios. Autenticación, pagos, despliegue de agentes, newsletter, lista de espera y enlaces sin destino aparecen como no disponibles. Estas integraciones y la publicación del sitio quedan fuera de la etapa cerrada; no son servicios activos.
+
+## Especificaciones y evidencia
+
+Con OpenSpec instalado, valida los contratos actuales con:
+
+```sh
+openspec validate --specs --strict
+```
+
+Los tres cambios de esta etapa se archivaron con fecha 2026-10-14 después de sincronizar sus especificaciones. Los documentos archivados describen decisiones históricas; `openspec/specs/` recoge el comportamiento vigente.
+
+`.artifacts/` contiene capturas, comparaciones y resultados locales de verificación. Está excluida de Git y no es necesaria para ejecutar o compilar el sitio. Puedes eliminarla si no necesitas esas referencias; los enlaces históricos a esa evidencia dejarán de estar disponibles.

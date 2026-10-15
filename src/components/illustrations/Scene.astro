@@ -1,0 +1,48 @@
+---
+import HeroIllustration from './HeroIllustration.astro';
+import SealedIllustration from './SealedIllustration.astro';
+import KeyIllustration from './KeyIllustration.astro';
+import StorageIllustration from './StorageIllustration.astro';
+import DeployIllustration from './DeployIllustration.astro';
+interface Props { kind: 'hero' | 'sealed' | 'key' | 'storage' | 'deploy' }
+const { kind } = Astro.props;
+
+---
+<div class:list={['scene', `scene-${kind}`]} data-scene data-kind={kind}>
+  <svg viewBox={kind === 'hero' ? '0 0 1732 728' : kind === 'sealed' ? '0 0 1100 854' : kind === 'key' ? '0 0 1708 1330' : kind === 'storage' ? '0 0 1090 756' : '0 0 1120 756'} fill="none" aria-hidden="true" focusable="false">
+    {kind === 'hero' ? <HeroIllustration /> : kind === 'sealed' ? <SealedIllustration /> : kind === 'key' ? <KeyIllustration /> : kind === 'storage' ? <StorageIllustration /> : <DeployIllustration />}
+  </svg>
+</div>
+<style is:global>
+  .scene { width: 100%; }
+  .scene > svg { width: 100%; height: auto; overflow: visible; }
+  .scene-hero { aspect-ratio: 1732 / 728; }
+  .scene-deploy { aspect-ratio: 1120 / 756; }
+  .scene-sealed, .scene-key, .scene-storage { aspect-ratio: 360 / 300; }
+  .scene-sealed, .scene-key, .scene-storage { display: flex; align-items: center; }
+  .scene .float-cube { animation: cube-float 6s var(--ease-in-out) infinite; }
+  .scene .node-pulse { animation: node-pulse 4.5s var(--ease-in-out) infinite; }
+  .scene .signal { animation: signal-flow 4s linear infinite; }
+  .scene .key-float { animation: key-float 5s var(--ease-in-out) infinite; }
+  .scene .server-layer { animation: server-settle 5.5s var(--ease-out) infinite; }
+  .scene .sealed-cage { animation: cage-breathe 5s var(--ease-in-out) infinite; }
+  .scene .sealed-cage polygon { stroke-dasharray: 300; animation: cage-draw 900ms var(--ease-out) both; }
+  .scene .monitor-line { animation: node-pulse 3s var(--ease-in-out) infinite; }
+  .scene * { animation-play-state: paused !important; }
+  .scene[data-running="true"] * { animation-play-state: running !important; }
+  html[data-motion="reduced"] .scene *, html:not([data-motion]) .scene * { animation: none !important; }
+  @keyframes cube-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes node-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+  @keyframes signal-flow { to { stroke-dashoffset: -84; } }
+  @keyframes key-float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(4px, -3px); } }
+  @keyframes server-settle { 0%, 65%, 100% { transform: translateY(0); } 35% { transform: translateY(-5px); } }
+  @keyframes cage-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+  @keyframes cage-draw { from { stroke-dashoffset: 300; } to { stroke-dashoffset: 0; } }
+  @media (max-width: 767px) {
+    /* A 680-unit window from x=520 to x=1200 contains every core module. */
+    .scene-hero { aspect-ratio: 680 / 728; overflow: hidden; }
+    .scene-hero > svg { width: calc(100% * 1732 / 680); max-width: none; margin-left: calc(-100% * 520 / 680); }
+    .scene-hero .hero-periphery { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .scene * { animation: none !important; } }
+</style>

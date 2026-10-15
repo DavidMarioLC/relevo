@@ -1,0 +1,46 @@
+---
+import Scene from '../illustrations/Scene.astro';
+import { hero, launchUrl } from '../../data/landing';
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <div class="live-badge"><span aria-hidden="true"></span>{hero.badge}</div>
+    <h1 id="hero-title">Your agents run while<br class="desktop-break" /> you sleep.</h1>
+    <p>{hero.description}</p>
+    <a class="button" href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a>
+    <span class="guarantee">30-day money-back</span>
+  </div>
+  <div class="hero-art"><Scene kind="hero" /></div>
+  <div class="motion-row">
+    <span class="system-status"><span aria-hidden="true"></span> One agent. One sealed machine.</span>
+    <button type="button" class="motion-toggle" data-motion-toggle aria-pressed="false" hidden><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span data-motion-label>Pause animations</span></button>
+  </div>
+</section>
+<script>
+  import '../../scripts/motion';
+</script>
+<style>
+  .hero { padding: 86px 32px 20px; overflow: hidden; background: #fffbf8; }
+  .hero-copy { text-align: center; position: relative; z-index: 1; }
+  .live-badge { display: inline-flex; gap: 9px; align-items: center; padding: 7px 10px; margin-bottom: 22px; background: #faeee5; border: 1px solid #eeded1; font: 10px var(--mono); text-transform: uppercase; }
+  .live-badge > span { width: 6px; height: 6px; background: var(--orange); }
+  h1 { font-size: clamp(46px, 5.1vw, 72px); margin-bottom: 22px; }
+  .hero-copy p { max-width: 590px; margin: 0 auto 32px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+  .guarantee { display: block; margin-top: 13px; font: 10px var(--mono); text-transform: uppercase; }
+  .hero-art { max-width: 1160px; margin: 8px auto 0; }
+  .motion-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; color: var(--muted); font: 9px var(--mono); text-transform: uppercase; }
+  .system-status { display: inline-flex; gap: 8px; align-items: center; }
+  .system-status > span { width: 4px; height: 4px; background: var(--orange); }
+  .motion-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; border: 0; padding: 0 8px; background: transparent; color: var(--muted); font: inherit; text-transform: inherit; }
+  .motion-symbol { color: var(--ink); font-size: 13px; }
+  @media (max-width: 767px) {
+    .hero { padding: 68px 20px 12px; }
+    h1 { font-size: clamp(43px, 8.8vw, 64px); line-height: 1.04; }
+    .desktop-break { display: none; }
+    .hero-copy p { font-size: 14px; margin-bottom: 26px; }
+    .hero-art { margin: 18px -20px 0; }
+    .motion-row { flex-wrap: wrap; justify-content: center; gap: 0 20px; }
+    .system-status { font-size: 8px; }
+    .motion-toggle { font-size: 8px; }
+  }
+</style>

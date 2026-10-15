@@ -1,0 +1,75 @@
+---
+import labels from '../../data/key-labels.json';
+---
+<defs>
+  <linearGradient id="key-ring-top" x1="431" y1="612" x2="431" y2="701" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#ed6410" /><stop offset="1" stop-color="#dc4e08" />
+  </linearGradient>
+  <linearGradient id="key-ring-side" x1="431" y1="656" x2="431" y2="717" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#d64a06" /><stop offset="1" stop-color="#c54108" />
+  </linearGradient>
+</defs>
+<g stroke-linejoin="round" stroke-linecap="round">
+  <!-- Shadows sit below both connection routes. -->
+  <g fill="#f3efec">
+    <path d="m519 948 142 56 295-169-144-55Z" />
+    <path d="m1265 459 82 47 189-109-82-47Z" />
+    <path d="m1423 1193 72 43 148-86-72-43Z" />
+  </g>
+  <path d="M708 671 1162 409" stroke="#ce7247" stroke-width="4" stroke-dasharray="12 23" />
+  <path d="M708 891 1350 1016" stroke="#a8a39b" stroke-width="3.2" stroke-dasharray="8 22" />
+  <g stroke="#dc6928" stroke-width="4" fill="none">
+    <path d="M948 520h21v15M1039 470h21v15" />
+  </g>
+  <g fill="#ed661b"><circle cx="708" cy="671" r="7" /><circle cx="1162" cy="409" r="7" /></g>
+  <path d="m138 781 381-220 381 220-381 219Z" stroke="#cb8a69" stroke-width="3.2" stroke-dasharray="10 22" />
+
+  <!-- Key platform. -->
+  <g stroke="#98958e" stroke-width="3.2">
+    <path d="m226 735 293 170v43L226 779Z" fill="#f1e9e2" />
+    <path d="m519 905 293-170v44L519 948Z" fill="#e6ddd4" />
+    <path d="m226 735 293-169 293 169-293 170Z" fill="#fffefd" />
+  </g>
+  <ellipse cx="519" cy="738" rx="183" ry="105" stroke="#c9c5bf" stroke-width="3.2" stroke-dasharray="3 15" />
+  <circle cx="591" cy="887" r="12.5" fill="#ed661b" />
+
+  <!-- The shaft and both teeth have a visible lower extrusion. -->
+  <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="m503 713 129 74m-49-30-37 22m81 4-39 23" stroke="#bc3d08" stroke-width="19" />
+    <path d="m503 701 129 74m-49-30-37 22m81 4-39 23" stroke="#d94c08" stroke-width="19" />
+    <path d="m502 699 129 74m-48-30-37 22m81 4-39 23" stroke="#ed6410" stroke-width="10" />
+  </g>
+  <!-- Elliptical ring: outer wall, inner wall, and annular upper face. -->
+  <path d="M357 655c0 25 33 45 75 45s75-20 75-45v17c0 25-33 45-75 45s-75-20-75-45Z" fill="url(#key-ring-side)" stroke="#c3450a" stroke-width="3" />
+  <path d="M373 662c0-17 26-30 59-30s59 13 59 30v10c0-17-26-30-59-30s-59 13-59 30Z" fill="#bd3f08" />
+  <path d="M507 655a75 43 0 1 1-150 0 75 43 0 1 1 150 0ZM491 662a59 30 0 1 0-118 0 59 30 0 1 0 118 0Z" fill="url(#key-ring-top)" fill-rule="evenodd" stroke="#db5009" stroke-width="3" />
+
+  <!-- Model provider base and three stacked machines, drawn back to front. -->
+  <g stroke="#99958e" stroke-width="3.2">
+    <path d="m1076 308 189 109v42l-189-109Z" fill="#f1eae4" />
+    <path d="m1265 417 189-109v42l-189 109Z" fill="#e7dfd7" />
+    <path d="m1076 308 189-109 189 109-189 109Z" fill="#fffefd" />
+    {[275, 229, 183].map((y, index) => <g>
+      <path d={`M1140 ${y}l125 72v31l-125-72Z`} fill="#f4eee8" />
+      <path d={`M1265 ${y+72}l124-72v31l-124 72Z`} fill="#e9e1d9" />
+      <path d={`M1140 ${y}l125-73 124 73-124 72Z`} fill="#faf6f3" />
+      <path d={`M1283 ${y+76}l36-21`} stroke={index === 2 ? '#dc7042' : '#d0c7bd'} stroke-width="4" />
+    </g>)}
+  </g>
+  <circle cx="1311" cy="412" r="8" fill="#c6beb3" />
+
+  <!-- Jurniti is on the blocked route below the key platform. -->
+  <g stroke="#99958f" stroke-width="3.2">
+    <path d="m1276 1065 147 85v43l-147-85Z" fill="#f2eae4" />
+    <path d="m1423 1150 148-85v43l-148 85Z" fill="#e6ddd4" />
+    <path d="m1276 1065 147-85 148 85-148 85Z" fill="#fffefd" />
+    <path d="m1360 1036 63 37v42l-63-37Z" fill="#eee5dd" />
+    <path d="m1423 1073 63-37v42l-63 37Z" fill="#e0d3c9" />
+    <path d="m1360 1036 63-36 63 36-63 37Z" fill="#faf6f3" />
+  </g>
+  <circle cx="1459" cy="1151" r="6.5" fill="#c9c1b6" />
+  <path d="m690 872 37 37m0-37-37 37" stroke="#eb651b" stroke-width="6" />
+  {labels.map(label => <g data-label={label.name} fill={label.fill} fill-rule="evenodd">
+    {label.layers.map(layer => <path d={layer.d} opacity={layer.opacity} />)}
+  </g>)}
+</g>

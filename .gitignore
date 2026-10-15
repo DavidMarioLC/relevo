@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 
+# local screenshots, visual comparisons, and verification output
+.artifacts/
+
 # dependencies
 node_modules/
 

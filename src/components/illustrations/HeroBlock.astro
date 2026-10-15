@@ -1,0 +1,11 @@
+---
+// Dimensions use the reference drawing's 30° isometric axes.
+interface Props { x: number; y: number; size: number; height: number; orange?: boolean; agent?: boolean }
+const { x, y, size: s, height: h, orange = false, agent = false } = Astro.props;
+const a = s * .577;
+---
+<g stroke={orange ? '#bc4a27' : '#9b928b'} stroke-width="1.1" stroke-linejoin="round">
+  <polygon points={`${x-s},${y} ${x},${y+a} ${x},${y+a+h} ${x-s},${y+h}`} fill={orange ? '#e6570a' : agent ? '#ede4de' : '#f5eee8'} />
+  <polygon points={`${x},${y+a} ${x+s},${y} ${x+s},${y+h} ${x},${y+a+h}`} fill={orange ? '#c0410b' : agent ? '#e4d7d1' : '#e8e0d8'} />
+  <polygon points={`${x},${y-a} ${x+s},${y} ${x},${y+a} ${x-s},${y}`} fill={orange ? '#eb7334' : agent ? '#faf4ef' : '#fff'} />
+</g>
