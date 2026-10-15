@@ -1,5 +1,5 @@
 {
-  "name": "jurniti",
+  "name": "relevo",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@lucide/astro": "^1.57.0",
     "astro": "^7.3.8"
   }
 }

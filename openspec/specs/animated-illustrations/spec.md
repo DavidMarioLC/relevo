@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Explicar visualmente el funcionamiento de Jurniti mediante escenas vectoriales isométricas animadas que mantengan su claridad en distintos tamaños de pantalla y respeten las preferencias de movimiento.
+Explicar visualmente el funcionamiento de Relevo mediante escenas vectoriales isométricas animadas que mantengan su claridad en distintos tamaños de pantalla y respeten las preferencias de movimiento.
 
 ## Requirements
 

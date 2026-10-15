@@ -1,4 +1,6 @@
 ---
+import { ArrowUpRight } from '@lucide/astro';
+import PixelFill from './PixelFill.astro';
 import { plans, resourceLabels, launchUrl } from '../../data/landing';
 ---
 <section id="pricing" class="pricing section-pad" aria-labelledby="pricing-title">
@@ -8,8 +10,8 @@ import { plans, resourceLabels, launchUrl } from '../../data/landing';
   </div>
   <div class="billing-wrapper">
     <div class="billing" role="group" aria-label="Billing period" hidden>
-      <button type="button" data-period="monthly" aria-pressed="true">Bill monthly</button>
-      <button type="button" data-period="yearly" aria-pressed="false">Bill yearly <span>2 months free</span></button>
+      <button class="pixel-button" type="button" data-period="monthly" aria-pressed="true"><PixelFill columns={20} />Bill monthly</button>
+      <button type="button" data-period="yearly" aria-pressed="false"><PixelFill columns={40} />Bill yearly <span class="billing-discount">2 months free</span></button>
     </div>
   </div>
   <div class="plan-grid">
@@ -18,7 +20,7 @@ import { plans, resourceLabels, launchUrl } from '../../data/landing';
       <p class="plan-description">{plan.description}</p>
       <div class="price"><span data-price>${plan.monthly}</span><span class="period">/ month</span></div>
       <p class="annual-total" data-annual hidden></p>
-      {plan.waitlist ? <button class="button outline plan-cta" disabled title="Waitlist — coming soon">Join the waitlist<span class="sr-only"> — coming soon</span></button> : <a class:list={['button', 'plan-cta', plan.recommended ? 'light' : 'outline']} href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a>}
+      {plan.waitlist ? <button class="button outline plan-cta" disabled title="Waitlist — coming soon">Join the waitlist<span class="sr-only"> — coming soon</span></button> : <a class:list={['button', 'plan-cta', plan.recommended ? 'light' : 'outline']} href={launchUrl}>Launch your agent <ArrowUpRight class="ui-icon arrow" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>}
       <dl>{resourceLabels.map((label, i) => <div class="resource"><dt>{label}</dt><dd>{plan.resources[i]}</dd></div>)}</dl>
     </article>)}
   </div>
@@ -32,7 +34,11 @@ import { plans, resourceLabels, launchUrl } from '../../data/landing';
     const buttons = billing.querySelectorAll<HTMLButtonElement>('button');
     buttons.forEach(button => button.addEventListener('click', () => {
       const yearly = button.dataset.period === 'yearly';
-      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      buttons.forEach(item => {
+        const selected = item === button;
+        item.setAttribute('aria-pressed', String(selected));
+        item.classList.toggle('pixel-button', selected);
+      });
       document.querySelectorAll<HTMLElement>('[data-monthly]').forEach(plan => {
         const monthly = Number(plan.dataset.monthly);
         const price = plan.querySelector('[data-price]');
@@ -53,7 +59,9 @@ import { plans, resourceLabels, launchUrl } from '../../data/landing';
   .billing { display: flex; border: 1px solid var(--line); padding: 4px; }
   .billing button { min-height: 44px; border: 0; background: transparent; padding: 10px 14px; font: 10px var(--mono); text-transform: uppercase; }
   .billing button[aria-pressed="true"] { background: var(--black); color: var(--paper); }
-  .billing button > span { display: inline-block; font-size: 8px; color: var(--orange-text); background: #faeee5; border: 1px solid #eeded1; padding: 4px 5px; margin-left: 6px; }
+  .billing button.pixel-button:focus-visible { background: var(--orange); color: var(--black); }
+  @media (hover: hover) and (pointer: fine) { .billing button.pixel-button:hover { color: var(--black); } }
+  .billing button > .billing-discount { display: inline-block; font-size: 8px; color: var(--orange-text); background: #faeee5; border: 1px solid #eeded1; padding: 4px 5px; margin-left: 6px; }
   .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
   .plan { padding: 28px 24px 0; min-width: 0; position: relative; }
   .plan + .plan { border-left: 1px solid var(--line); }
@@ -83,7 +91,7 @@ import { plans, resourceLabels, launchUrl } from '../../data/landing';
     .pricing-heading > p { justify-self: start; max-width: 400px; }
     .billing-wrapper { min-height: 100px; }
     .billing button { padding: 8px 10px; font-size: 9px; }
-    .billing button > span { font-size: 7px; margin-left: 3px; padding: 4px; }
+    .billing button > .billing-discount { font-size: 7px; margin-left: 3px; padding: 4px; }
     .plan-grid { grid-template-columns: 1fr; }
     .plan { padding: 27px 22px 6px; }
     .plan + .plan { border-left: 0; border-top: 1px solid var(--line); }

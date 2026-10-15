@@ -58,7 +58,7 @@ import labels from '../../data/key-labels.json';
   </g>
   <circle cx="1311" cy="412" r="8" fill="#c6beb3" />
 
-  <!-- Jurniti is on the blocked route below the key platform. -->
+  <!-- Relevo is on the blocked route below the key platform. -->
   <g stroke="#99958f" stroke-width="3.2">
     <path d="m1276 1065 147 85v43l-147-85Z" fill="#f2eae4" />
     <path d="m1423 1150 148-85v43l-148 85Z" fill="#e6ddd4" />
@@ -69,6 +69,7 @@ import labels from '../../data/key-labels.json';
   </g>
   <circle cx="1459" cy="1151" r="6.5" fill="#c9c1b6" />
   <path d="m690 872 37 37m0-37-37 37" stroke="#eb651b" stroke-width="6" />
+  <text data-label="relevo" transform="matrix(.866 .5 -.866 .5 1440 1179)" fill="#554d47" font-family="Arial, sans-serif" font-size="35" textLength="142" lengthAdjust="spacingAndGlyphs">Relevo</text>
   {labels.map(label => <g data-label={label.name} fill={label.fill} fill-rule="evenodd">
     {label.layers.map(layer => <path d={layer.d} opacity={layer.opacity} />)}
   </g>)}

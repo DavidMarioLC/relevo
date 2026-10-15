@@ -1,11 +1,15 @@
 ---
+import { ArrowUpRight, Menu, X } from '@lucide/astro';
 import Brand from './Brand.astro';
+import PixelFill from './PixelFill.astro';
 import { navigation, launchUrl } from '../../data/landing';
 ---
 <header id="home" class="header">
-  <a class="home-link" href="#home" aria-label="Jurniti home"><Brand /></a>
+  <a class="home-link" href="#home" aria-label="Relevo home"><Brand /></a>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
-    <span data-menu-label>Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+    <span data-menu-label>Menu</span>
+    <span class="icon-slot" data-menu-icon="open" aria-hidden="true"><Menu class="ui-icon" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></span>
+    <span class="icon-slot" data-menu-icon="close" aria-hidden="true" hidden><X class="ui-icon" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></span>
   </button>
   <nav id="site-nav" aria-label="Main navigation">
     {navigation.map(item => item.href ? <a href={item.href}>{item.label}</a> : <span aria-disabled="true" title={`${item.label} — coming soon`}>{item.label}<span class="sr-only"> — coming soon</span></span>)}
@@ -13,7 +17,7 @@ import { navigation, launchUrl } from '../../data/landing';
   </nav>
   <div class="account">
     <span class="login" aria-disabled="true" title="Log in — coming soon">Log in<span class="sr-only"> — coming soon</span></span>
-    <a class="button header-cta" href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a>
+    <a class="button header-cta pixel-button" href={launchUrl}><PixelFill rows={9} />Launch your agent <ArrowUpRight class="ui-icon arrow" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>
   </div>
 </header>
 <script>
@@ -21,6 +25,8 @@ import { navigation, launchUrl } from '../../data/landing';
   const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
   const nav = document.querySelector<HTMLElement>('#site-nav');
   if (header && menu && nav) {
+    const openIcon = menu.querySelector<HTMLElement>('[data-menu-icon="open"]');
+    const closeIcon = menu.querySelector<HTMLElement>('[data-menu-icon="close"]');
     header.dataset.enhanced = 'true';
     menu.hidden = false;
     const setOpen = (open: boolean, restoreFocus = false) => {
@@ -28,6 +34,8 @@ import { navigation, launchUrl } from '../../data/landing';
       header.dataset.open = String(open);
       const label = menu.querySelector('[data-menu-label]');
       if (label) label.textContent = open ? 'Close' : 'Menu';
+      if (openIcon) openIcon.hidden = open;
+      if (closeIcon) closeIcon.hidden = !open;
       if (restoreFocus) menu.focus();
     };
     menu.addEventListener('click', () => setOpen(menu.getAttribute('aria-expanded') !== 'true'));
@@ -57,8 +65,6 @@ import { navigation, launchUrl } from '../../data/landing';
     .login { display: none; }
     .header-cta { padding-inline: 15px; font-size: 10px; }
     .header[data-enhanced] .menu-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; order: 3; border: 0; border-left: 1px solid var(--line); background: transparent; min-width: 82px; min-height: 58px; font: 10px var(--mono); text-transform: uppercase; }
-    .menu-icon { display: grid; gap: 4px; }
-    .menu-icon i { width: 13px; height: 1px; background: currentColor; }
     nav { order: 4; width: 100%; flex-wrap: wrap; border-top: 1px solid var(--line); }
     nav > a, nav > span { flex: 1; min-height: 48px; padding: 12px; }
     nav .mobile-feature-link { display: flex; }

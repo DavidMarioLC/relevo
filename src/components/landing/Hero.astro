@@ -1,19 +1,29 @@
 ---
+import { ArrowUpRight, Pause, Play } from '@lucide/astro';
 import Scene from '../illustrations/Scene.astro';
+import PixelFill from './PixelFill.astro';
 import { hero, launchUrl } from '../../data/landing';
+
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-copy">
     <div class="live-badge"><span aria-hidden="true"></span>{hero.badge}</div>
     <h1 id="hero-title">Your agents run while<br class="desktop-break" /> you sleep.</h1>
     <p>{hero.description}</p>
-    <a class="button" href={launchUrl}>Launch your agent <span class="arrow" aria-hidden="true">↗</span></a>
+    <a class="button pixel-button" href={launchUrl}>
+      <PixelFill />
+      Launch your agent <ArrowUpRight class="ui-icon arrow" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" />
+    </a>
     <span class="guarantee">30-day money-back</span>
   </div>
   <div class="hero-art"><Scene kind="hero" /></div>
   <div class="motion-row">
     <span class="system-status"><span aria-hidden="true"></span> One agent. One sealed machine.</span>
-    <button type="button" class="motion-toggle" data-motion-toggle aria-pressed="false" hidden><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span data-motion-label>Pause animations</span></button>
+    <button type="button" class="motion-toggle" data-motion-toggle aria-pressed="false" hidden>
+      <span class="icon-slot motion-symbol" data-motion-icon="pause" aria-hidden="true"><Pause class="ui-icon" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></span>
+      <span class="icon-slot motion-symbol" data-motion-icon="play" aria-hidden="true" hidden><Play class="ui-icon" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></span>
+      <span data-motion-label>Pause animations</span>
+    </button>
   </div>
 </section>
 <script>
@@ -32,7 +42,7 @@ import { hero, launchUrl } from '../../data/landing';
   .system-status { display: inline-flex; gap: 8px; align-items: center; }
   .system-status > span { width: 4px; height: 4px; background: var(--orange); }
   .motion-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; border: 0; padding: 0 8px; background: transparent; color: var(--muted); font: inherit; text-transform: inherit; }
-  .motion-symbol { color: var(--ink); font-size: 13px; }
+  .motion-symbol { color: var(--ink); }
   @media (max-width: 767px) {
     .hero { padding: 68px 20px 12px; }
     h1 { font-size: clamp(43px, 8.8vw, 64px); line-height: 1.04; }

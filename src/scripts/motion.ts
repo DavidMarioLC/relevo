@@ -1,5 +1,7 @@
 const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene]'));
 const control = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
+const pauseIcon = control?.querySelector<HTMLElement>('[data-motion-icon="pause"]');
+const playIcon = control?.querySelector<HTMLElement>('[data-motion-icon="play"]');
 const preference = matchMedia('(prefers-reduced-motion: reduce)');
 let userPaused = false;
 const visible = new Set<HTMLElement>();
@@ -14,9 +16,9 @@ function updateMotion() {
     control.hidden = reduced;
     control.setAttribute('aria-pressed', String(userPaused));
     const label = control.querySelector('[data-motion-label]');
-    const icon = control.querySelector('.motion-symbol');
     if (label) label.textContent = userPaused ? 'Resume animations' : 'Pause animations';
-    if (icon) icon.textContent = userPaused ? '▷' : 'Ⅱ';
+    if (pauseIcon) pauseIcon.hidden = userPaused;
+    if (playIcon) playIcon.hidden = !userPaused;
   }
 }
 const observer = new IntersectionObserver(entries => {

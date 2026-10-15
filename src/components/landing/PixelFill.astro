@@ -1,0 +1,38 @@
+---
+interface Props {
+  columns?: number;
+  rows?: number;
+}
+
+const { columns = 32, rows = 8 } = Astro.props;
+const pixels = Array.from({ length: columns * rows }, (_, index) => {
+  const column = index % columns;
+  const noise = ((index * 37 + Math.floor(index / columns) * 13) % 101) / 100;
+  return {
+    enterDelay: Math.round((column / (columns - 1)) * 240 + noise * 100),
+    exitDelay: Math.round((1 - column / (columns - 1)) * 240 + noise * 100),
+  };
+});
+---
+<span class="pixel-fill" aria-hidden="true" style={`grid-template-columns: repeat(${columns}, 1fr); grid-template-rows: repeat(${rows}, 1fr);`}>
+  {pixels.map(pixel => <span style={`--pixel-enter-delay: ${pixel.enterDelay}ms; --pixel-exit-delay: ${pixel.exitDelay}ms;`}></span>)}
+</span>
+
+<style is:global>
+  .pixel-button { position: relative; isolation: isolate; transition: color 160ms ease; }
+  .pixel-fill { display: none; position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+  /* Overlap fractional grid edges to leave a seamless completed fill. */
+  .pixel-fill > span { margin: -.5px; background: var(--orange); opacity: 0; transition: opacity 160ms ease var(--pixel-exit-delay); }
+  @media (hover: hover) and (pointer: fine) {
+    @media (prefers-reduced-motion: no-preference) {
+      .pixel-button:not(:disabled):not([aria-disabled="true"]) > .pixel-fill { display: grid; }
+      .pixel-button:hover:not(:disabled):not([aria-disabled="true"]) { color: var(--black); transition-delay: 340ms; }
+      .pixel-button:hover:not(:disabled):not([aria-disabled="true"]) > .pixel-fill > span { opacity: 1; transition-delay: var(--pixel-enter-delay); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pixel-button:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--orange); color: var(--black); }
+    }
+  }
+  .pixel-button:focus-visible:not(:disabled):not([aria-disabled="true"]) { background: var(--orange); color: var(--black); transition: none; }
+  .pixel-button:focus-visible > .pixel-fill { visibility: hidden; }
+</style>

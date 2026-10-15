@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Mantener una ilustración principal de Jurniti fiel a la referencia visual del usuario, con geometría isométrica coherente, detalle reconocible y movimiento contenido en escritorio y móvil.
+Mantener una ilustración principal de Relevo fiel a la referencia visual del usuario, con geometría isométrica coherente, detalle reconocible y movimiento contenido en escritorio y móvil.
 
 ## Requirements
 

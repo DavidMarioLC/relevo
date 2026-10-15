@@ -1,6 +1,6 @@
-# Jurniti
+# Relevo
 
-Landing pública de Jurniti construida con Astro. Incluye navegación adaptable, funcionalidades, comparación mensual/anual de planes y controles accesibles de movimiento.
+Landing pública de Relevo construida con Astro. Incluye navegación adaptable, funcionalidades, comparación mensual/anual de planes y controles accesibles de movimiento.
 
 ## Desarrollo
 
@@ -41,7 +41,7 @@ pnpm preview
 
 ## Estado actual
 
-La etapa visual de la landing está completada. El hero usa la imagen original de 1732 × 728 con actividad SVG en luces, conexiones y monitor; el cubo permanece fijo. Las cuatro escenas restantes son vectoriales. Pausa, movimiento reducido y ausencia de JavaScript conservan una presentación estática útil.
+La etapa visual de la landing está completada. Los iconos de interfaz usan Lucide y los botones con fondo negro incorporan un hover naranja pixelado de medio segundo al entrar y salir; los botones claros y de contorno conservan su hover habitual. El hero usa la imagen original de 1732 × 728 con actividad SVG en luces, conexiones y monitor; el cubo permanece fijo. Las cuatro escenas restantes son vectoriales. Pausa, movimiento reducido y ausencia de JavaScript conservan una presentación estática útil.
 
 Los CTA de lanzamiento llevan a precios. Autenticación, pagos, despliegue de agentes, newsletter, lista de espera y enlaces sin destino aparecen como no disponibles. Estas integraciones y la publicación del sitio quedan fuera de la etapa cerrada; no son servicios activos.
 
@@ -53,6 +53,6 @@ Con OpenSpec instalado, valida los contratos actuales con:
 openspec validate --specs --strict
 ```
 
-Los tres cambios de esta etapa se archivaron con fecha 2026-10-14 después de sincronizar sus especificaciones. Los documentos archivados describen decisiones históricas; `openspec/specs/` recoge el comportamiento vigente.
+Los tres cambios visuales iniciales se archivaron el 2026-10-14 y `add-lucide-icons` el 2026-10-15, después de sincronizar sus especificaciones. Los documentos archivados describen decisiones históricas; `openspec/specs/` recoge el comportamiento vigente.
 
 `.artifacts/` contiene capturas, comparaciones y resultados locales de verificación. Está excluida de Git y no es necesaria para ejecutar o compilar el sitio. Puedes eliminarla si no necesitas esas referencias; los enlaces históricos a esa evidencia dejarán de estar disponibles.
