@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@lucide/astro": "^1.57.0",
-    "astro": "^7.3.8"
+    "astro": "^7.3.8",
+    "motion": "^14.3.0"
   }
 }
