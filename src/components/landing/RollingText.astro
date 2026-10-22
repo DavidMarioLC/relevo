@@ -1,0 +1,23 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+<span class="rolling-text"><span class="rolling-text-track">{text}<span class="rolling-text-copy" aria-hidden="true">{text}</span></span></span>
+
+<style>
+  .rolling-text { display: inline-block; overflow: hidden; line-height: 1.3; vertical-align: top; }
+  .rolling-text-track { display: block; position: relative; }
+  .rolling-text-copy { position: absolute; top: 100%; left: 0; width: 100%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .rolling-text-track { transition: transform 400ms var(--ease-out); }
+    :global(.rolling-text-trigger:focus-visible) .rolling-text-track { transform: translateY(-100%); }
+
+    @media (hover: hover) and (pointer: fine) {
+      :global(.rolling-text-trigger:hover) .rolling-text-track { transform: translateY(-100%); }
+    }
+  }
+</style>

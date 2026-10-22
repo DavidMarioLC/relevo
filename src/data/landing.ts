@@ -1,7 +1,7 @@
 export const launchUrl = '#pricing';
 export const navigation = [
-  { label: 'Templates', href: null }, { label: 'Collections', href: null },
-  { label: 'Pricing', href: '#pricing' }, { label: 'Blog', href: null },
+  { label: 'Templates', href: '#' }, { label: 'Collections', href: '#' },
+  { label: 'Pricing', href: '#pricing' }, { label: 'Blog', href: '#' },
 ];
 export const hero = {
   badge: 'Live in about 3 minutes',
@@ -19,10 +19,10 @@ export const plans = [
 ];
 export const resourceLabels = ['CPU', 'Memory', 'Storage', 'Bandwidth', 'Web address', 'Daily snapshots'];
 export const footerGroups = [
-  { title: 'Product', items: [{ label: 'Pricing', href: '#pricing' }, { label: 'Templates', href: null }, { label: 'Collections', href: null }, { label: 'Swarm', href: null }] },
-  { title: 'Platform', items: [{ label: 'Memory', href: '#features' }, { label: 'Blog', href: null }, { label: 'Observability', href: null }, { label: 'Communication', href: null }, { label: 'Docs', href: null }] },
-  { title: 'Agents', items: [{ label: 'Claude Code', href: null }, { label: 'Codex CLI', href: null }, { label: 'Hermes', href: null }, { label: 'OpenClaw', href: null }, { label: 'All agents', href: null }] },
-  { title: 'Company', items: [{ label: 'Home', href: '#home' }, { label: 'About', href: null }, { label: 'Careers', href: null }, { label: 'Contact', href: null }] },
-  { title: 'Free tools', items: [{ label: 'Deploy recipe', href: null }, { label: 'Cost calculator', href: null }] },
-  { title: 'Follow', items: [{ label: 'X', href: null }, { label: 'GitHub', href: null }, { label: 'LinkedIn', href: null }, { label: 'Discord', href: null }] },
+  { title: 'Product', items: [{ label: 'Pricing', href: '#pricing' }, { label: 'Templates', href: '#' }, { label: 'Collections', href: '#' }, { label: 'Swarm', href: '#' }] },
+  { title: 'Platform', items: [{ label: 'Memory', href: '#features' }, { label: 'Blog', href: '#' }, { label: 'Observability', href: '#' }, { label: 'Communication', href: '#' }, { label: 'Docs', href: '#' }] },
+  { title: 'Agents', items: [{ label: 'Claude Code', href: '#' }, { label: 'Codex CLI', href: '#' }, { label: 'Hermes', href: '#' }, { label: 'OpenClaw', href: '#' }, { label: 'All agents', href: '#' }] },
+  { title: 'Company', items: [{ label: 'Home', href: '#home' }, { label: 'About', href: '#' }, { label: 'Careers', href: '#' }, { label: 'Contact', href: '#' }] },
+  { title: 'Free tools', items: [{ label: 'Deploy recipe', href: '#' }, { label: 'Cost calculator', href: '#' }] },
+  { title: 'Follow', items: [{ label: 'X', href: '#' }, { label: 'GitHub', href: '#' }, { label: 'LinkedIn', href: '#' }, { label: 'Discord', href: '#' }] },
 ];
