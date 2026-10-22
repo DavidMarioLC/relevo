@@ -16,10 +16,10 @@ La landing SHALL incluir cinco escenas isométricas: el hero con la imagen origi
 - **AND** el hero conserva el detalle de la imagen original de 1732 × 728 sin exigir resolución vectorial infinita
 
 ### Requirement: Contextual scene animation
-Con movimiento habilitado, cada escena visible SHALL animar elementos relacionados con su mensaje sin desplazar el contenido de la página ni reducir la legibilidad del texto.
+Con movimiento habilitado, cada escena visible SHALL animar elementos relacionados con su mensaje sin desplazar el contenido de la página ni reducir la legibilidad del texto. La actividad ambiental del hero SHALL comenzar después de finalizar o dar por terminada su entrada inicial, siempre que su escena esté visible, la pestaña activa y no exista pausa manual.
 
 #### Scenario: Hero activity
-- **WHEN** el hero está visible con movimiento habilitado
+- **WHEN** el hero está visible con movimiento habilitado después de su entrada inicial
 - **THEN** luces, conexiones y monitor muestran actividad naranja discreta sobre la imagen original
 - **AND** el cubo central, sus etiquetas y los módulos permanecen fijos
 - **AND** la escena no mueve el título ni el CTA
@@ -31,6 +31,16 @@ Con movimiento habilitado, cada escena visible SHALL animar elementos relacionad
 #### Scenario: Deployment activity
 - **WHEN** el CTA final está visible con movimiento habilitado
 - **THEN** la grúa baja el cubo hacia la plataforma y la secuencia regresa suavemente a su inicio
+
+#### Scenario: Hero entrance handoff
+- **WHEN** se reproduce la entrada inicial del hero
+- **THEN** la capa de actividad ambiental permanece oculta
+- **AND** al finalizar la entrada puede comenzar la actividad únicamente si están permitidas reproducción, visibilidad y preferencia de movimiento
+
+#### Scenario: Pausing before the handoff
+- **WHEN** se solicita pausa manual antes de terminar la entrada
+- **THEN** al finalizar la entrada la ilustración queda completamente visible y su actividad ambiental permanece detenida
+- **AND** la actividad solo puede comenzar al reanudar con movimiento permitido y la escena visible en una pestaña activa
 
 ### Requirement: Responsive illustration composition
 Las escenas SHALL adaptarse al espacio disponible preservando proporción y motivos principales. En móvil la escena del hero SHALL mantener el cubo y la máquina central con un tamaño reconocible, permitiendo simplificar elementos periféricos decorativos.
@@ -85,3 +95,11 @@ La página SHALL ofrecer un control accesible para pausar y reanudar las animaci
 - **WHEN** se activa reanudar con movimiento reducido desactivado
 - **THEN** solo se animan las escenas visibles en la pestaña activa
 - **AND** la preferencia de movimiento reducido, si se activa, mantiene las escenas estáticas
+
+### Requirement: Entrance independent scene playback
+La entrada del nav y hero no SHALL retrasar la reproducción de otras escenas visibles. Terminar, omitir o cancelar la entrada no SHALL borrar la pausa manual, ignorar movimiento reducido ni activar escenas fuera del viewport o de una pestaña activa.
+
+#### Scenario: Skipping to another section
+- **WHEN** se accede directamente a una sección inferior o se abandona el hero durante su entrada
+- **THEN** las escenas de esa sección siguen las reglas compartidas de reproducción sin esperar la entrada del hero
+- **AND** volver al hero no repite la entrada ni restablece una pausa solicitada

@@ -10,7 +10,9 @@ function updateMotion() {
   const reduced = preference.matches;
   document.documentElement.dataset.motion = reduced ? 'reduced' : 'enabled';
   for (const scene of scenes) {
-    scene.dataset.running = String(visible.has(scene) && !document.hidden && !reduced && !userPaused);
+    const entrance = document.documentElement.dataset.entrance;
+    const ready = scene.dataset.kind !== 'hero' || (entrance !== 'pending' && entrance !== 'running');
+    scene.dataset.running = String(ready && visible.has(scene) && !document.hidden && !reduced && !userPaused);
   }
   if (control) {
     control.hidden = reduced;
@@ -33,4 +35,5 @@ scenes.forEach(scene => observer.observe(scene));
 control?.addEventListener('click', () => { userPaused = !userPaused; updateMotion(); });
 preference.addEventListener('change', updateMotion);
 document.addEventListener('visibilitychange', updateMotion);
+document.addEventListener('relevo:entrance-complete', updateMotion);
 updateMotion();

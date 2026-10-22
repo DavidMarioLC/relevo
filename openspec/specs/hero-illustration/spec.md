@@ -42,7 +42,7 @@ El hero SHALL conservar las tres caras de color del cubo naranja, su contorno su
 - **AND** la cara derecha del cubo es más oscura que la izquierda y la superior es más clara
 
 ### Requirement: Motion preserves the drawing
-La actividad del hero SHALL limitarse a luces, señales por conexiones y actividad del monitor superpuestas a la imagen original. El cubo, su etiqueta, el recinto y los módulos SHALL permanecer fijos, conservando la separación y superposición de la referencia.
+La actividad ambiental del hero SHALL limitarse a luces, señales por conexiones y actividad del monitor superpuestas a la imagen original. Durante la entrada inicial SHALL permitirse únicamente una aparición por opacidad de la composición completa. El cubo, su etiqueta, el recinto y los módulos SHALL permanecer fijos, conservando la separación y superposición de la referencia.
 
 #### Scenario: Animated cycle review
 - **WHEN** se revisa un ciclo completo con movimiento habilitado
@@ -56,6 +56,12 @@ La actividad del hero SHALL limitarse a luces, señales por conexiones y activid
 - **THEN** el hero respeta los controles compartidos de movimiento de la landing
 - **AND** la capa de actividad queda oculta y se muestra únicamente la imagen original
 - **AND** sin JavaScript se presenta la misma composición completa y estable
+
+#### Scenario: Whole illustration entrance
+- **WHEN** aparece la ilustración durante la secuencia inicial
+- **THEN** la composición aumenta su opacidad como una sola unidad, sin traslación, escala, desenfoque ni movimiento independiente de piezas
+- **AND** se mantienen el archivo original, sus proporciones, su encuadre adaptable y el espacio reservado en la página
+- **AND** con movimiento reducido la ilustración se presenta directamente completa
 
 ### Requirement: Mobile core composition
 Desde 320 px la ilustración SHALL mantener visibles el recinto, el cubo, la llave y los tres módulos inferiores, conservando proporciones y separación. El encuadre móvil SHALL permitir simplificar u ocultar agentes periféricos sin crear desplazamiento horizontal.

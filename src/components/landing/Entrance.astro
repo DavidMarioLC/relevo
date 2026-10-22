@@ -1,0 +1,76 @@
+<!-- Opt in before first paint; the unenhanced document is always visible. -->
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const preference = matchMedia('(prefers-reduced-motion: reduce)');
+    const navigation = performance.getEntriesByType('navigation')[0];
+    if (preference.matches || document.hidden || scrollY > 0 ||
+        (location.hash && location.hash !== '#home') || navigation?.type === 'back_forward') return;
+
+    const listeners = new AbortController();
+    const options = { signal: listeners.signal };
+    const deadline = performance.now() + 1500;
+    root.dataset.entrance = 'pending';
+
+    const finish = () => {
+      root.dataset.entrance = 'done';
+      clearTimeout(watchdog);
+      listeners.abort();
+      document.dispatchEvent(new Event('relevo:entrance-complete'));
+    };
+    let watchdog = setTimeout(finish, 1500);
+
+    document.addEventListener('relevo:entrance-start', event => {
+      if (performance.now() >= deadline || scrollY > 0 || document.hidden || preference.matches) {
+        finish();
+        return;
+      }
+      root.dataset.entrance = 'running';
+      clearTimeout(watchdog);
+      watchdog = setTimeout(finish, event.detail.duration + 120);
+    }, { ...options, once: true });
+    document.addEventListener('relevo:entrance-end', finish, options);
+    document.addEventListener('focusin', event => {
+      if (event.target instanceof Element && event.target.closest('[data-entrance]')) finish();
+    }, options);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) finish();
+    }, options);
+    window.addEventListener('scroll', () => { if (scrollY > 0) finish(); }, { ...options, passive: true });
+    window.addEventListener('pageshow', event => { if (event.persisted) finish(); }, options);
+    window.addEventListener('pagehide', finish, options);
+    preference.addEventListener('change', () => { if (preference.matches) finish(); }, options);
+  })();
+</script>
+
+<script>
+  import '../../scripts/entrance';
+</script>
+
+<style is:global>
+  :root { --entrance-total: 780; }
+  [data-entrance="header"] { --entrance-delay: 0ms; --entrance-duration: 320ms; --entrance-y: -6px; }
+  [data-entrance="badge"] { --entrance-delay: 60ms; --entrance-duration: 360ms; --entrance-y: 8px; }
+  [data-entrance="title"] { --entrance-delay: 120ms; --entrance-duration: 480ms; --entrance-y: 12px; }
+  [data-entrance="description"] { --entrance-delay: 200ms; --entrance-duration: 400ms; --entrance-y: 8px; }
+  [data-entrance="action"] { --entrance-delay: 280ms; --entrance-duration: 400ms; --entrance-y: 8px; }
+  [data-entrance="art"] { --entrance-delay: 180ms; --entrance-duration: 600ms; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* CSS also releases the content if the coordinator never initializes. */
+    html[data-entrance="pending"] [data-entrance] {
+      animation: entrance-pending 1500ms steps(1, end) both;
+    }
+    html[data-entrance="running"] [data-entrance] {
+      animation: entrance-rise var(--entrance-duration) var(--ease-out) var(--entrance-delay) backwards;
+    }
+    html[data-entrance="running"] [data-entrance="art"] { animation-name: entrance-fade; }
+  }
+
+  @keyframes entrance-pending { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes entrance-rise {
+    from { opacity: 0; transform: translateY(var(--entrance-y)); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes entrance-fade { from { opacity: 0; } to { opacity: 1; } }
+</style>
