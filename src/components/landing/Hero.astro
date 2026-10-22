@@ -4,11 +4,19 @@ import Scene from '../illustrations/Scene.astro';
 import PixelFill from './PixelFill.astro';
 import { hero, launchUrl } from '../../data/landing';
 
+const title = 'Your agents run while you sleep.';
+const titleWords = title.split(' ');
 ---
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-copy">
     <div class="live-badge" data-entrance="badge"><span aria-hidden="true"></span>{hero.badge}</div>
-    <h1 id="hero-title" data-entrance="title">Your agents run while<br class="desktop-break" /> you sleep.</h1>
+    <h1 id="hero-title" data-entrance="title" aria-label={title}>
+      {titleWords.map((word, index) => <Fragment>
+        {index === 4 && <br class="desktop-break" />}
+        {index > 0 && ' '}
+        <span class="hero-word" aria-hidden="true"><span data-entrance-word style={`--word-index: ${index}`}>{word}</span></span>
+      </Fragment>)}
+    </h1>
     <p data-entrance="description">{hero.description}</p>
     <div data-entrance="action">
       <a class="button pixel-button" href={launchUrl}>
@@ -37,6 +45,8 @@ import { hero, launchUrl } from '../../data/landing';
   .live-badge { display: inline-flex; gap: 9px; align-items: center; padding: 7px 10px; margin-bottom: 22px; background: #faeee5; border: 1px solid #eeded1; font: 10px var(--mono); text-transform: uppercase; }
   .live-badge > span { width: 6px; height: 6px; background: var(--orange); }
   h1 { font-size: clamp(46px, 5.1vw, 72px); margin-bottom: 22px; }
+  .hero-word { display: inline-block; overflow: clip; vertical-align: top; padding-block: .12em; margin-block: -.12em; }
+  [data-entrance-word] { display: inline-block; }
   .hero-copy p { max-width: 590px; margin: 0 auto 32px; color: var(--muted); font-size: 15px; line-height: 1.5; }
   .guarantee { display: block; margin-top: 13px; font: 10px var(--mono); text-transform: uppercase; }
   .hero-art { max-width: 1160px; margin: 8px auto 0; }

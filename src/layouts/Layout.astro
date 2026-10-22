@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Entrance from '../components/landing/Entrance.astro';
+import ScrollReveal from '../components/landing/ScrollReveal.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -16,5 +17,6 @@ import Entrance from '../components/landing/Entrance.astro';
   <body>
     <a class="skip-link button" href="#main">Skip to content</a>
     <slot />
+    <ScrollReveal />
   </body>
 </html>

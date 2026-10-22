@@ -48,10 +48,9 @@
 </script>
 
 <style is:global>
-  :root { --entrance-total: 780; }
+  :root { --entrance-total: 1220; }
   [data-entrance="header"] { --entrance-delay: 0ms; --entrance-duration: 320ms; --entrance-y: -6px; }
   [data-entrance="badge"] { --entrance-delay: 60ms; --entrance-duration: 360ms; --entrance-y: 8px; }
-  [data-entrance="title"] { --entrance-delay: 120ms; --entrance-duration: 480ms; --entrance-y: 12px; }
   [data-entrance="description"] { --entrance-delay: 200ms; --entrance-duration: 400ms; --entrance-y: 8px; }
   [data-entrance="action"] { --entrance-delay: 280ms; --entrance-duration: 400ms; --entrance-y: 8px; }
   [data-entrance="art"] { --entrance-delay: 180ms; --entrance-duration: 600ms; }
@@ -65,6 +64,10 @@
       animation: entrance-rise var(--entrance-duration) var(--ease-out) var(--entrance-delay) backwards;
     }
     html[data-entrance="running"] [data-entrance="art"] { animation-name: entrance-fade; }
+    html[data-entrance="running"] [data-entrance="title"] { animation: none; }
+    html[data-entrance="running"] [data-entrance-word] {
+      animation: entrance-word 700ms var(--ease-out) calc(120ms + var(--word-index) * 80ms) backwards;
+    }
   }
 
   @keyframes entrance-pending { from { opacity: 0; } to { opacity: 1; } }
@@ -73,4 +76,8 @@
     to { opacity: 1; transform: none; }
   }
   @keyframes entrance-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes entrance-word {
+    from { opacity: 0; transform: translateY(110%); }
+    to { opacity: 1; transform: none; }
+  }
 </style>

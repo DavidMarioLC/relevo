@@ -4,27 +4,29 @@ import PixelFill from './PixelFill.astro';
 import { plans, resourceLabels, launchUrl } from '../../data/landing';
 ---
 <section id="pricing" class="pricing section-pad" aria-labelledby="pricing-title">
-  <div class="pricing-heading">
+  <div class="pricing-heading" data-reveal="heading">
     <div><span class="eyebrow">Pricing</span><h2 id="pricing-title" class="section-title">A real machine for<br /><span class="soft">every agent.</span></h2></div>
     <p>Every agent gets its own sealed machine at one flat monthly price. No usage billed on top, no markup on your model tokens.</p>
   </div>
   <div class="billing-wrapper">
-    <div class="billing" role="group" aria-label="Billing period" hidden>
+    <div class="billing" role="group" aria-label="Billing period" data-reveal="billing" hidden>
       <button class="pixel-button" type="button" data-period="monthly" aria-pressed="true"><PixelFill columns={20} />Bill monthly</button>
       <button type="button" data-period="yearly" aria-pressed="false"><PixelFill columns={40} />Bill yearly <span class="billing-discount">2 months free</span></button>
     </div>
   </div>
   <div class="plan-grid">
-    {plans.map(plan => <article class:list={['plan', { recommended: plan.recommended }]} data-monthly={plan.monthly}>
-      <div class="plan-heading"><h3>{plan.name}</h3>{plan.recommended && <span class="recommended-label">Recommended</span>}</div>
-      <p class="plan-description">{plan.description}</p>
-      <div class="price"><span data-price>${plan.monthly}</span><span class="period">/ month</span></div>
-      <p class="annual-total" data-annual hidden></p>
-      {plan.waitlist ? <button class="button outline plan-cta" disabled title="Waitlist — coming soon">Join the waitlist<span class="sr-only"> — coming soon</span></button> : <a class:list={['button', 'plan-cta', plan.recommended ? 'light' : 'outline']} href={launchUrl}>Launch your agent <ArrowUpRight class="ui-icon arrow" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>}
-      <dl>{resourceLabels.map((label, i) => <div class="resource"><dt>{label}</dt><dd>{plan.resources[i]}</dd></div>)}</dl>
+    {plans.map(plan => <article class:list={['plan', { recommended: plan.recommended }]} data-monthly={plan.monthly} data-reveal-slot>
+      <div data-reveal="card">
+        <div class="plan-heading"><h3>{plan.name}</h3>{plan.recommended && <span class="recommended-label">Recommended</span>}</div>
+        <p class="plan-description">{plan.description}</p>
+        <div class="price"><span data-price>${plan.monthly}</span><span class="period">/ month</span></div>
+        <p class="annual-total" data-annual hidden></p>
+        {plan.waitlist ? <button class="button outline plan-cta" disabled title="Waitlist — coming soon">Join the waitlist<span class="sr-only"> — coming soon</span></button> : <a class:list={['button', 'plan-cta', plan.recommended ? 'light' : 'outline']} href={launchUrl}>Launch your agent <ArrowUpRight class="ui-icon arrow" size={16} stroke-width={1.5} aria-hidden="true" focusable="false" /></a>}
+        <dl>{resourceLabels.map((label, i) => <div class="resource"><dt>{label}</dt><dd>{plan.resources[i]}</dd></div>)}</dl>
+      </div>
     </article>)}
   </div>
-  <p class="hourly">Running agents part time? <span>Pay by the hour from $0.05<span class="sr-only"> — coming soon</span></span></p>
+  <p class="hourly" data-reveal="note">Running agents part time? <span>Pay by the hour from $0.05<span class="sr-only"> — coming soon</span></span></p>
   <p class="sr-only" role="status" aria-live="polite" data-billing-status></p>
 </section>
 <script>

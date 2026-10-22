@@ -3,12 +3,16 @@ import Scene from '../illustrations/Scene.astro';
 import { features } from '../../data/landing';
 ---
 <section id="features" class="features section-pad" aria-labelledby="features-title">
-  <span class="eyebrow">Features</span>
-  <h2 id="features-title" class="section-title">Everything it needs to keep working<br /><span class="soft">while you’re away.</span></h2>
+  <div data-reveal="heading">
+    <span class="eyebrow">Features</span>
+    <h2 id="features-title" class="section-title">Everything it needs to keep working<br /><span class="soft">while you’re away.</span></h2>
+  </div>
   <div class="features-grid">
-    {features.map(feature => <article class="feature">
-      <div class="feature-art"><Scene kind={feature.scene} /></div>
-      <div class="feature-copy"><h3>{feature.title}</h3><p>{feature.description}</p></div>
+    {features.map(feature => <article class="feature" data-reveal-slot>
+      <div data-reveal="card">
+        <div class="feature-art"><Scene kind={feature.scene} /></div>
+        <div class="feature-copy"><h3>{feature.title}</h3><p>{feature.description}</p></div>
+      </div>
     </article>)}
   </div>
 </section>
