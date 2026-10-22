@@ -59,46 +59,45 @@ import { plans, resourceLabels, launchUrl } from '../../data/landing';
   .pricing-heading > p { max-width: 440px; justify-self: end; font-size: 16px; color: var(--muted); }
   .billing-wrapper { min-height: 105px; display: flex; justify-content: center; align-items: center; padding: 28px 0; }
   .billing { display: flex; border: 1px solid var(--line); padding: 4px; }
-  .billing button { min-height: 44px; border: 0; background: transparent; padding: 10px 14px; font: 10px var(--mono); text-transform: uppercase; }
+  .billing button { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border: 0; background: transparent; padding: 10px 14px; font: 12px/1.4 var(--mono); text-transform: uppercase; }
   .billing button[aria-pressed="true"] { background: var(--black); color: var(--paper); }
   .billing button.pixel-button:focus-visible { background: var(--orange); color: var(--black); }
   @media (hover: hover) and (pointer: fine) { .billing button.pixel-button:hover { color: var(--black); } }
-  .billing button > .billing-discount { display: inline-block; font-size: 8px; color: var(--orange-text); background: #faeee5; border: 1px solid #eeded1; padding: 4px 5px; margin-left: 6px; }
+  .billing button > .billing-discount { display: inline-block; font-size: 12px; color: var(--orange-text); background: #faeee5; border: 1px solid #eeded1; padding: 4px 5px; }
   .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); }
   .plan { padding: 28px 24px 0; min-width: 0; position: relative; }
   .plan + .plan { border-left: 1px solid var(--line); }
   .recommended { background: var(--black); color: var(--paper); }
   .recommended::before { content: ''; position: absolute; top: 0; inset-inline: -1px; height: 7px; background: var(--orange); }
-  .plan-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .plan-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
   h3 { font-size: 20px; letter-spacing: -.05em; }
-  .recommended-label { padding: 6px 7px; color: #c7c3bc; background: #252420; font: 8px var(--mono); text-transform: uppercase; }
+  .recommended-label { padding: 6px 7px; color: #c7c3bc; background: #252420; font: 12px/1.4 var(--mono); text-transform: uppercase; }
   .plan-description { margin-top: 10px; font-size: 12px; color: var(--muted); }
   .recommended .plan-description { color: #a7a69e; }
   .price { display: flex; align-items: baseline; gap: 7px; margin: 14px 0 26px; }
   [data-price] { font-size: 44px; font-weight: 500; letter-spacing: -.07em; line-height: 1; }
   .period { font-size: 12px; color: var(--muted); }
   .recommended .period { color: #b7b4ac; }
-  .annual-total { font-size: 10px; line-height: 1.4; margin: -16px 0 16px; color: var(--muted); }
+  .annual-total { font-size: 12px; line-height: 1.4; margin: -16px 0 16px; color: var(--muted); }
   .recommended .annual-total { color: #b7b4ac; }
-  .plan-cta { width: 100%; padding-inline: 8px; margin-bottom: 30px; font-size: 10px; }
-  .resource { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); font-size: 11px; line-height: 1.3; }
+  .plan-cta { width: 100%; padding-inline: 8px; margin-bottom: 30px; font-size: 12px; }
+  .resource { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.3; }
   .resource dd { color: var(--muted); text-align: right; }
   .recommended .resource { border-color: #2b2c26; }
   .recommended .resource dd { color: #a7a69e; }
   .hourly { text-align: center; margin-top: 26px; font-size: 12px; color: var(--muted); }
   .hourly > span { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  @media (max-width: 1023px) { .pricing-heading { gap: 36px; } .pricing-heading > p { font-size: 14px; } .plan { padding-inline: 16px; } .recommended-label { font-size: 7px; padding-inline: 4px; } }
+  @media (max-width: 1023px) { .pricing-heading { gap: 36px; } .pricing-heading > p { font-size: 14px; } .plan { padding-inline: 16px; } }
   @media (max-width: 767px) {
     .pricing-heading { grid-template-columns: 1fr; gap: 22px; }
     .pricing-heading > p { justify-self: start; max-width: 400px; }
     .billing-wrapper { min-height: 100px; }
-    .billing button { padding: 8px 10px; font-size: 9px; }
-    .billing button > .billing-discount { font-size: 7px; margin-left: 3px; padding: 4px; }
+    .billing { width: 100%; max-width: 360px; }
+    .billing button { flex: 1; min-width: 0; padding: 8px 10px; }
     .plan-grid { grid-template-columns: 1fr; }
     .plan { padding: 27px 22px 6px; }
     .plan + .plan { border-left: 0; border-top: 1px solid var(--line); }
     h3 { font-size: 22px; }
-    .recommended-label { font-size: 9px; padding: 6px 7px; }
     .resource { padding-block: 13px; font-size: 12px; }
     .plan-cta { margin-bottom: 25px; }
     .hourly { max-width: 240px; margin-inline: auto; line-height: 1.7; }

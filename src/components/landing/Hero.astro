@@ -42,15 +42,15 @@ const titleWords = title.split(' ');
 <style>
   .hero { padding: 86px 32px 20px; overflow: hidden; background: #fffbf8; }
   .hero-copy { text-align: center; position: relative; z-index: 1; }
-  .live-badge { display: inline-flex; gap: 9px; align-items: center; padding: 7px 10px; margin-bottom: 22px; background: #faeee5; border: 1px solid #eeded1; font: 10px var(--mono); text-transform: uppercase; }
+  .live-badge { display: inline-flex; gap: 9px; align-items: center; padding: 7px 10px; margin-bottom: 22px; background: #faeee5; border: 1px solid #eeded1; font: 12px/1.4 var(--mono); text-transform: uppercase; }
   .live-badge > span { width: 6px; height: 6px; background: var(--orange); }
   h1 { font-size: clamp(46px, 5.1vw, 72px); margin-bottom: 22px; }
   .hero-word { display: inline-block; overflow: clip; vertical-align: top; padding-block: .12em; margin-block: -.12em; }
   [data-entrance-word] { display: inline-block; }
   .hero-copy p { max-width: 590px; margin: 0 auto 32px; color: var(--muted); font-size: 15px; line-height: 1.5; }
-  .guarantee { display: block; margin-top: 13px; font: 10px var(--mono); text-transform: uppercase; }
+  .guarantee { display: block; margin-top: 13px; font: 12px/1.4 var(--mono); text-transform: uppercase; }
   .hero-art { max-width: 1160px; margin: 8px auto 0; }
-  .motion-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; color: var(--muted); font: 9px var(--mono); text-transform: uppercase; }
+  .motion-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; color: var(--muted); font: 12px/1.4 var(--mono); text-transform: uppercase; }
   .system-status { display: inline-flex; gap: 8px; align-items: center; }
   .system-status > span { width: 4px; height: 4px; background: var(--orange); }
   .motion-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; border: 0; padding: 0 8px; background: transparent; color: var(--muted); font: inherit; text-transform: inherit; }
@@ -61,8 +61,6 @@ const titleWords = title.split(' ');
     .desktop-break { display: none; }
     .hero-copy p { font-size: 14px; margin-bottom: 26px; }
     .hero-art { margin: 18px -20px 0; }
-    .motion-row { flex-wrap: wrap; justify-content: center; gap: 0 20px; }
-    .system-status { font-size: 8px; }
-    .motion-toggle { font-size: 8px; }
+    .motion-row { flex-wrap: wrap; justify-content: center; gap: 8px 20px; }
   }
 </style>
