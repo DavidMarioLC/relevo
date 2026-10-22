@@ -2,9 +2,11 @@
 import labels from '../../data/hero-labels.json';
 interface Props { label: keyof typeof labels; light?: boolean }
 const { label, light = false } = Astro.props;
+// One contour lets the browser antialias the vector once, keeping small lettering crisp.
+const outline = labels[label][1];
 ---
 <!-- Local glyph outlines preserve the reference's projected lettering across platforms. -->
-<g class="hero-label" data-label={label} fill={light ? '#ffd0ad' : '#514b44'} stroke="none">
+<g class="hero-label" data-label={label} fill={light ? '#ffd0ad' : '#38332e'} stroke="none">
   <text display="none">{label}</text>
-  {labels[label].map(({ d, opacity }) => <path d={d} opacity={opacity} fill-rule="evenodd" />)}
+  <path d={outline.d} fill-rule="evenodd" />
 </g>

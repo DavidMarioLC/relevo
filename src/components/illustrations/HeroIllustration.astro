@@ -1,25 +1,151 @@
-<!-- Preserve the approved source, including its color profile and lettering. -->
-<image href="/images/hero-reference.png" width="1732" height="728" />
-<g class="hero-activity">
-  <g fill="#f25d16" class="hero-lights">
-    <circle cx="825" cy="544" r="4" /><circle cx="624" cy="451" r="3.6" />
-    <circle cx="49" cy="382" r="1.8" /><circle cx="132" cy="430" r="1.8" /><circle cx="298" cy="430" r="1.8" />
-    <circle cx="1416" cy="526" r="1.8" /><circle cx="1499" cy="478" r="1.8" /><circle cx="1664" cy="382" r="1.8" />
+---
+import HeroAgent from './HeroAgent.astro';
+import HeroLabel from './HeroLabel.astro';
+import { agents, build } from '../../data/hero-assembly';
+const network = [
+  'M101.5 391 350 534.2', 'M184.4 343.4 432.7 486.5',
+  'M225.8 319.2 474.3 462.7', 'M225.8 319.2 101.5 391',
+  'M308.7 367.1 184.5 438.8', 'M391.5 414.8 267.5 486.5',
+  'M474.3 462.7 350 534.2',
+];
+const junctions = [[225.8,319.2],[184.4,343.4],[308.7,367.1],[101.5,391],[267.5,391],
+  [391.5,414.8],[184.5,438.8],[350.3,438.8],[474.3,462.7],[267.5,486.5],[432.7,486.5],[350,534.2]];
+---
+<g class="hero-drawing" stroke-linejoin="round" stroke-linecap="round">
+  <!-- All geometry is native SVG. Rear and front edges are separate paint layers. -->
+  <g {...build('platform-shadow','foundation')} fill="#625650">
+    <path d="M627 471 856 604 1113 458 1142 480 882 632 649 497Z" opacity=".055"/>
+    <path d="m565 565 92 54 73-43 26 25-74 43-92-54Z" opacity=".08"/>
+    <path d="m889 629 61 36 59-35 45 43-60 36-62-36Z" opacity=".08"/>
+    <path d="m995 557 69 52 93-53 30 29-93 54-69-52Z" opacity=".08"/>
   </g>
-  <circle class="hero-signal-left" cx="475" cy="463" r="1.8" fill="#f25d16" />
-  <circle class="hero-signal-right" cx="1239" cy="463" r="1.8" fill="#f25d16" />
-  <path class="hero-trace" d="M1082 548 1094 531 1104 541 1113 527 1121 545 1129 532 1137 537" fill="none" stroke="#f47a24" stroke-width="1.2" stroke-dasharray="8 100" />
+  <g stroke="#928983" stroke-width="1.2">
+    <path {...build('platform-left','foundation')} d="M627 397 856 529v67L627 464Z" fill="#f5eee8"/>
+    <path {...build('platform-right','foundation',60)} d="m856 529 231-132v67L856 596Z" fill="#e8e0d8"/>
+    <path {...build('platform-top','foundation',100)} d="m627 397 230-132 230 132-231 132Z" fill="#fff"/>
+  </g>
+  <g {...build('platform-grooves','equipment')} stroke="#b4a9a0" stroke-width="1">
+    {[660,672,684,696,708].map((x,i)=><path d={`M${x} ${431+i*7}v31`}/>)}
+  </g>
+  <g {...build('cage-glass','enclosure')}>
+    <path d="m650 184 206-118 208 118-208 120Z" fill="#f8f5f2"/>
+    <path d="m650 184 206 120v213L650 397Z" fill="#f9f6f4"/>
+    <path d="m856 304 208-120v213L856 517Z" fill="#fcf8f5"/>
+    <path d="m650 397 207-118 207 118-208 120Z" fill="#fafafa"/>
+  </g>
+  <g {...build('cage-back','enclosure',0)} stroke="#9d958f" stroke-width="1" stroke-dasharray="2 5">
+    <path d="M856 66v213L650 397m206-118 208 118"/>
+  </g>
+  <path {...build('cage-roof','enclosure',0,'draw')} d="m650 184 206-118 208 118" stroke="#38332e" stroke-width="1.6"/>
+  <path {...build('cube-shadow','cube')} d="m776 397 80 47 82-47 23 40-83 48-80-47Z" fill="#35302d" opacity=".065"/>
+  <g stroke="#bc4a27" stroke-width="1.15">
+    <path {...build('cube-left','cube')} d="m776 304 80 46v94l-80-47Z" fill="#e6570a"/>
+    <path {...build('cube-right','cube',80)} d="m856 350 82-46v93l-82 47Z" fill="#c0410b"/>
+    <path {...build('cube-top','cube',160)} d="m776 304 80-46 82 46-82 46Z" fill="#eb7336"/>
+  </g>
+  <path {...build('cube-rim','cube',200,'draw')} d="m810 304 46-27 47 27-47 27Z" stroke="#f9b786" stroke-width="1"/>
+  <g {...build('key','equipment',150)} stroke="#302c29" stroke-width="2.8" fill="none">
+    <ellipse cx="840" cy="453" rx="15.5" ry="8"/>
+    <path d="m853 458 27 16m-7-4-5 4m12 0-5 4"/>
+  </g>
+  <path {...build('cage-front','enclosure',0,'draw')} d="M650 397V184l206 120 208-120v213L856 517 650 397m206-93v213" stroke="#38332e" stroke-width="1.6"/>
+  <!-- Connectors are their own volumes rather than generic symmetric cubes. -->
+  <g {...build('platform-connectors','equipment')} stroke="#928983" stroke-width="1.2">
+    <path d="m613 431 24-14 24 14-24 14Z" fill="#fff"/>
+    <path d="m613 431 24 14v25l-24-14Z" fill="#f5eee8"/>
+    <path d="m637 445 24-14v25l-24 14Z" fill="#e8e0d8"/>
+    <path d="m706 491 16-10 20 12-16 10Z" fill="#fff"/>
+    <path d="m706 491 20 12v14l-20-12Z" fill="#f5eee8"/>
+    <path d="m726 503 16-10v14l-16 10Z" fill="#e8e0d8"/>
+    <path d="m1053 430 23-13 25 14-23 14Z" fill="#fff"/>
+    <path d="m1053 430 25 15v20l-25-15Z" fill="#f5eee8"/>
+    <path d="m1078 445 23-14v20l-23 14Z" fill="#e8e0d8"/>
+    <path d="m984 485 23-13 18 10-23 14Z" fill="#fff"/>
+    <path d="m984 485 18 11v15l-18-12Z" fill="#f5eee8"/>
+  </g>
+  <g stroke="#928983" stroke-width="1.2">
+    {[52,26,0].map((dy,i)=><g {...build(`memory-plate-${i}`,'equipment',i*100)} transform={`translate(0 ${dy})`}>
+      <path d="m564 495 92 53v18l-92-53Z" fill="#f5eee8"/>
+      <path d="m656 548 74-43v18l-74 43Z" fill="#e8e0d8"/>
+      <path d="m564 495 72-42 94 54-74 41Z" fill="#fff"/>
+    </g>)}
+    <g {...build('relay-connector','equipment',120)}>
+      <path d="m866 563 16-10 24 14-17 10Z" fill="#fff"/>
+      <path d="m866 563 23 14v13l-23-13Z" fill="#f5eee8"/>
+    </g>
+    <g {...build('relay-base','equipment',160)}>
+      <path d="m889 578 60 34v53l-60-35Z" fill="#f5eee8"/>
+      <path d="m949 612 60-35v53l-60 35Z" fill="#e8e0d8"/>
+      <path d="m889 578 60-35 60 34-60 35Z" fill="#fff"/>
+    </g>
+    <g {...build('relay-stem','equipment',300)}>
+      <path d="m940 500 9 5v78l-9-5Z" fill="#f5eee8"/>
+      <path d="m949 505 9-5v78l-9 5Z" fill="#e8e0d8"/>
+      <ellipse cx="949" cy="501" rx="11" ry="5" fill="#e7ded9"/>
+      <path d="M923 490v5c0 8 12 14 26 14s26-6 26-14v-5" fill="#e8e0d8"/>
+      <ellipse cx="949" cy="491" rx="26" ry="14" fill="#f5eee8"/>
+      <ellipse cx="949" cy="492" rx="14" ry="7.5" fill="#e7ded9" stroke="#756c65"/>
+    </g>
+    <g {...build('monitor-case','equipment',60)}>
+      <path d="m995 485 69 40v84l-69-40Z" fill="#f5eee8"/>
+      <path d="m1064 525 93-54v85l-93 53Z" fill="#e8e0d8"/>
+      <path d="m995 485 93-54 69 40-93 54Z" fill="#fff"/>
+    </g>
+    <path {...build('monitor-screen','equipment',280)} d="m1078 534 64-41v50l-64 40Z" fill="#27211e" stroke="#b1a69e"/>
+  </g>
+  <path {...build('monitor-graph','equipment',400,'draw')} d="m1082 548 12-17 10 10 9-14 8 18 8-13 8 5" stroke="#dc651d" stroke-width="1.7"/>
+  <g {...build('main-indicators','label')} fill="#eb5d15">
+    <circle cx="825" cy="544" r="4"/><circle cx="624" cy="451" r="3.6"/>
+  </g>
+  <g class="hero-periphery">
+    {agents.map((agent,index)=><HeroAgent {...agent} index={index}/>)}
+    {agents.map((agent,index)=><HeroAgent x={1713.5-agent.x} y={agent.y} active={[4,6,7].includes(index)} index={index} right/>)}
+    <!-- Network crosses transparent cages; solid cubes and bases occlude it. -->
+    <defs>
+      <mask id="hero-network-occlusion" maskUnits="userSpaceOnUse" x="0" y="0" width="1732" height="728">
+        <path d="M0 0H1732V728H0Z" fill="#fff"/>
+        {[false,true].flatMap(right=>agents.map((a,index)=>{
+          const x=right?1713.5-a.x:a.x;
+          const active=right?[4,6,7].includes(index):a.active;
+          const y=a.y+(active?-12:-10);
+          return <path d={`M${x-19} ${y} ${x} ${y-11} ${x+19} ${y}v21l-19 11-19-11Z M${x-46} ${a.y+11}l46 26.5 46-26.5v10L${x} ${a.y+48}l-46-27Z`} fill="#000"/>;
+        }))}
+      </mask>
+    </defs>
+    <g {...build('agent-connections','connection')} mask="url(#hero-network-occlusion)" stroke="#8b827a" stroke-width="1.25" stroke-dasharray="2 6">
+      {network.map(d=><path d={d}/>)}
+      {network.map(d=><path d={d} transform="translate(1713.5 0) scale(-1 1)"/>)}
+    </g>
+    <g {...build('agent-junctions','connection',0)} fill="#514b44">
+      {junctions.map(([x,y])=><circle cx={x} cy={y} r="1.7"/>)}
+      {junctions.map(([x,y])=><circle cx={1713.5-x} cy={y} r="1.7"/>)}
+    </g>
+    <g {...build('agent-labels','label')}>
+      <HeroLabel label="coding agents, 8"/><HeroLabel label="autonomous agents, 8"/>
+    </g>
+  </g>
+  <path {...build('central-connections','connection')} d="m475 462 89 51m675-51-82 48" stroke="#8b827a" stroke-width="1.25" stroke-dasharray="2 6"/>
+  <g {...build('cage-label','label')}><HeroLabel label="firecracker microvm"/></g>
+  <g {...build('cube-label','label')}><HeroLabel label="hermes.proto" light/></g>
+  <g {...build('memory-label','label')}><HeroLabel label="memory"/></g>
+  <g {...build('monitor-label','label')}><HeroLabel label="traces"/></g>
+  <g {...build('relay-label','label')}><HeroLabel label="relay"/></g>
+</g>
+<g class="hero-activity" fill="#f25d16">
+  <g class="hero-lights"><circle cx="825" cy="544" r="4"/><circle cx="624" cy="451" r="3.6"/></g>
+  <circle class="hero-signal-left" cx="475" cy="462" r="1.8"/>
+  <circle class="hero-signal-right" cx="1239" cy="462" r="1.8"/>
+  <path class="hero-trace" d="m1082 548 12-17 10 10 9-14 8 18 8-13 8 5" fill="none" stroke="#f47a24" stroke-width="1.2" stroke-dasharray="8 100"/>
 </g>
 <style>
-  .hero-lights, .hero-signal-left, .hero-signal-right, .hero-trace { opacity: 0; }
-  .hero-lights { animation: hero-light 4.5s ease-in-out infinite; }
-  .hero-signal-left { animation: hero-left 4s linear infinite; }
-  .hero-signal-right { animation: hero-right 4s linear -2s infinite; }
-  .hero-trace { animation: hero-trace 4s linear infinite; }
-  /* Pausing reveals only the reference, regardless of cycle phase. */
-  :global(.scene-hero:not([data-running="true"])) .hero-activity { visibility: hidden; }
-  @keyframes hero-light { 0%, 100% { opacity: 0; } 50% { opacity: .45; } }
-  @keyframes hero-left { 0% { transform: translate(0, 0); opacity: 0; } 15%, 85% { opacity: .8; } 100% { transform: translate(138px, 80px); opacity: 0; } }
-  @keyframes hero-right { 0% { transform: translate(0, 0); opacity: 0; } 15%, 85% { opacity: .8; } 100% { transform: translate(-89px, 51px); opacity: 0; } }
-  @keyframes hero-trace { 0%, 100% { opacity: 0; stroke-dashoffset: 0; } 30%, 70% { opacity: .6; } 90% { stroke-dashoffset: -100; } }
+  .hero-lights,.hero-signal-left,.hero-signal-right,.hero-trace { opacity:0; }
+  .hero-lights { animation:hero-light 4.5s var(--ease-in-out) infinite; }
+  .hero-signal-left { animation:hero-left 4s linear infinite; }
+  .hero-signal-right { animation:hero-right 4s linear -2s infinite; }
+  .hero-trace { animation:hero-trace 4s linear infinite; }
+  :global(.scene-hero:not([data-running="true"])) .hero-activity { visibility:hidden; }
+  @keyframes hero-light { 0%,100% {opacity:0} 50% {opacity:.45} }
+  @keyframes hero-left { 0% {transform:translate(0,0);opacity:0} 15%,85% {opacity:.8} 100% {transform:translate(89px,51px);opacity:0} }
+  @keyframes hero-right { 0% {transform:translate(0,0);opacity:0} 15%,85% {opacity:.8} 100% {transform:translate(-82px,48px);opacity:0} }
+  @keyframes hero-trace { 0%,100% {opacity:0;stroke-dashoffset:0} 30%,70% {opacity:.6} 90% {stroke-dashoffset:-100} }
 </style>

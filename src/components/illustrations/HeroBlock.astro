@@ -1,11 +1,14 @@
 ---
-// Dimensions use the reference drawing's 30° isometric axes.
-interface Props { x: number; y: number; size: number; height: number; orange?: boolean; agent?: boolean }
-const { x, y, size: s, height: h, orange = false, agent = false } = Astro.props;
+import { build, type AssemblyPhase } from '../../data/hero-assembly';
+interface Props {
+  x: number; y: number; size: number; height: number;
+  orange?: boolean; agent?: boolean; id: string; phase: AssemblyPhase; delay?: number;
+}
+const { x, y, size:s, height:h, orange=false, agent=false, id, phase, delay=0 } = Astro.props;
 const a = s * .577;
 ---
 <g stroke={orange ? '#bc4a27' : '#9b928b'} stroke-width="1.1" stroke-linejoin="round">
-  <polygon points={`${x-s},${y} ${x},${y+a} ${x},${y+a+h} ${x-s},${y+h}`} fill={orange ? '#e6570a' : agent ? '#ede4de' : '#f5eee8'} />
-  <polygon points={`${x},${y+a} ${x+s},${y} ${x+s},${y+h} ${x},${y+a+h}`} fill={orange ? '#c0410b' : agent ? '#e4d7d1' : '#e8e0d8'} />
-  <polygon points={`${x},${y-a} ${x+s},${y} ${x},${y+a} ${x-s},${y}`} fill={orange ? '#eb7334' : agent ? '#faf4ef' : '#fff'} />
+  <polygon {...build(`${id}-left`, phase, delay)} points={`${x-s},${y} ${x},${y+a} ${x},${y+a+h} ${x-s},${y+h}`} fill={orange ? '#e6570a' : agent ? '#ede4df' : '#f5eee8'} />
+  <polygon {...build(`${id}-right`, phase, delay+40)} points={`${x},${y+a} ${x+s},${y} ${x+s},${y+h} ${x},${y+a+h}`} fill={orange ? '#c0410b' : agent ? '#e4d7d1' : '#e8e0d8'} />
+  <polygon {...build(`${id}-top`, phase, delay+80)} points={`${x},${y-a} ${x+s},${y} ${x},${y+a} ${x-s},${y}`} fill={orange ? '#eb7336' : agent ? '#faf4ef' : '#fff'} />
 </g>

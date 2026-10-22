@@ -1,21 +1,20 @@
 ---
 import HeroBlock from './HeroBlock.astro';
-interface Props { x: number; y: number; active: boolean; index: number; right?: boolean }
-const { x, y, active, index, right = false } = Astro.props;
+import { build } from '../../data/hero-assembly';
+interface Props { x:number; y:number; active:boolean; index:number; right?:boolean }
+const {x,y,active,index,right=false}=Astro.props;
+const id = `agent-${right?'right':'left'}-${index}`;
+const delay = index*80;
 ---
 <g class="hero-agent" data-active={active} transform={`translate(${x} ${y})`} stroke-linejoin="round">
-  <path d="M-46 21 0 47.5 46 21 65 40 19 66.5-27 40Z" fill="#625650" opacity=".075" />
-  <HeroBlock x={0} y={9} size={46} height={12} />
-  <HeroBlock x={0} y={8} size={43} height={3} />
-  <g stroke="#a0968f" stroke-width="1.05">
-    <path d="M0-58v48l-39 23m39-23 39 23" stroke-dasharray="2 4" />
-    <path d="m-39-35 39-23 39 23-39 23Z" fill="#eee8e2" fill-opacity=".2" />
+  <path {...build(`${id}-shadow`,'agentBase',delay)} d="M-46 21 0 47.5 46 21 65 40 19 66.5-27 40Z" fill="#625650" opacity=".075" />
+  <HeroBlock id={`${id}-base`} phase="agentBase" delay={delay} x={0} y={9} size={46} height={12}/>
+  <HeroBlock id={`${id}-lip`} phase="agentBase" delay={delay+40} x={0} y={8} size={43} height={3}/>
+  <g {...build(`${id}-back`,'agentCage',delay)} stroke="#a0968f" stroke-width="1.05">
+    <path d="M0-58v48l-39 23m39-23 39 23" stroke-dasharray="2 4"/>
+    <path d="m-39-35 39-23 39 23-39 23Z" fill="#eee8e2" fill-opacity=".2"/>
   </g>
-  <g class={active ? 'hero-agent-active' : undefined} style={`animation-delay:${-index*.6}s`}>
-    <HeroBlock x={0} y={active ? -12 : -10} size={18.5} height={20} orange={active} agent />
-  </g>
-  <g stroke="#928983" stroke-width="1.1">
-    <path d="M-39-35v48L0 36l39-23v-48M0-12v48" />
-  </g>
-  <circle class={active ? 'hero-indicator' : undefined} style={`animation-delay:${-index*.6}s`} cx={right ? 11 : -11} cy="36" r="2.1" fill={active ? '#ef5d22' : '#bcb2aa'} />
+  <HeroBlock id={`${id}-cube`} phase="agentCube" delay={delay} x={0} y={active ? -12 : -10} size={18.5} height={20} orange={active} agent/>
+  <path {...build(`${id}-front`,'agentCage',delay+80,'draw')} d="M-39-35v48L0 36l39-23v-48M-39-35 0-12l39-23M0-12v48" stroke="#928983" stroke-width="1.1"/>
+  <circle {...build(`${id}-indicator`,'label')} cx={right ? 11 : -11} cy="36" r="2.1" fill={active?'#ef5d22':'#bcb2aa'} />
 </g>

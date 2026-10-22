@@ -1,3 +1,5 @@
+import './hero-assembly';
+
 const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene]'));
 const control = document.querySelector<HTMLButtonElement>('[data-motion-toggle]');
 const pauseIcon = control?.querySelector<HTMLElement>('[data-motion-icon="pause"]');
@@ -11,7 +13,11 @@ function updateMotion() {
   document.documentElement.dataset.motion = reduced ? 'reduced' : 'enabled';
   for (const scene of scenes) {
     const entrance = document.documentElement.dataset.entrance;
-    const ready = scene.dataset.kind !== 'hero' || (entrance !== 'pending' && entrance !== 'running');
+    const assembly = document.documentElement.dataset.heroAssembly;
+    const ready = scene.dataset.kind !== 'hero' || (
+      entrance !== 'pending' && entrance !== 'running' &&
+      (!assembly || assembly === 'complete')
+    );
     scene.dataset.running = String(ready && visible.has(scene) && !document.hidden && !reduced && !userPaused);
   }
   if (control) {
@@ -32,8 +38,13 @@ const observer = new IntersectionObserver(entries => {
   updateMotion();
 });
 scenes.forEach(scene => observer.observe(scene));
-control?.addEventListener('click', () => { userPaused = !userPaused; updateMotion(); });
+control?.addEventListener('click', () => {
+  userPaused = !userPaused;
+  document.dispatchEvent(new CustomEvent('relevo:motion-pause', {detail:{paused:userPaused}}));
+  updateMotion();
+});
 preference.addEventListener('change', updateMotion);
 document.addEventListener('visibilitychange', updateMotion);
 document.addEventListener('relevo:entrance-complete', updateMotion);
+document.addEventListener('relevo:assembly-complete', updateMotion);
 updateMotion();
